@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Rachma Bunga Safitrie — UI/UX & Product Designer</title>
+    <meta
+      name="description"
+      content="Portfolio of Rachma Bunga Safitrie, a creative UI/UX and Product Designer based in Jakarta, Indonesia. Specializing in mobile interface design and visual storytelling."
+    />
+    <meta
+      name="keywords"
+      content="UI/UX Designer, Product Designer, Jakarta, Portfolio, Mobile Interface Design"
+    />
+    <meta
+      property="og:title"
+      content="Rachma Bunga Safitrie — UI/UX Designer"
+    />
+    <meta
+      property="og:description"
+      content="Creative UI/UX and Product Designer based in Jakarta."
+    />
+    <meta property="og:image" content="./data/Rachma Bunga Safitrie.jpeg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- ==================== INTRO OVERLAY ==================== -->
+    <div id="intro-overlay" class="intro-overlay">
+      <canvas id="intro-canvas" class="intro-canvas"></canvas>
+      <button id="intro-enter" class="intro-enter">Enter</button>
+    </div>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav id="navbar" class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-logo">rachma.design</a>
+        <a href="mailto:bungaracma@gmail.com" class="nav-email"
+          >bungaracma@gmail.com</a
+        >
+        <div class="nav-links">
+          <a href="#about" class="nav-link">ABOUT</a>
+          <a href="#work" class="nav-link">WORK</a>
+          <a href="#contact" class="nav-link">CONTACT</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="hero-section">
+      <canvas id="hero-canvas" class="hero-canvas"></canvas>
+      <div class="hero-container">
+        <div class="hero-text-left">
+          <span class="hero-greeting">Hello! I'm</span>
+          <h1 class="hero-name">RACHMA<br />BUNGA<br />SAFITRIE</h1>
+        </div>
+        <div class="hero-photo-wrapper">
+          <div class="hero-photo-glow"></div>
+          <img
+            src="./data/Rachma Bunga Safitrie.jpeg"
+            alt="Rachma Bunga Safitrie - UI/UX Designer"
+            class="hero-photo"
+          />
+        </div>
+        <div class="hero-text-right">
+          <span class="hero-creative-label">A Creative</span>
+          <div class="hero-role-switcher">
+            <span id="role-text" class="hero-role">DESIGNER</span>
+          </div>
+        </div>
+      </div>
+      <!-- Floating orb -->
+      <div class="floating-orb"></div>
+    </section>
+
+    <!-- ==================== ABOUT / EXPERIENCE TIMELINE ==================== -->
+    <section id="about" class="about-section">
+      <canvas id="about-boxes-canvas" class="about-boxes-canvas"></canvas>
+      <div class="about-boxes-mask"></div>
+      <h2 class="section-heading-outline">About</h2>
+
+      <!-- Summary + 3D Robot -->
+      <div class="about-intro">
+        <div class="about-summary">
+          <p>
+            I am a highly creative person with a passion for generating innovative
+            solutions. With a strong background in UI/UX & visual design and
+            creative media development, I am constantly looking for new ways to
+            generate fresh and engaging ideas. I believe that creativity is a
+            driving force that motivates me to tackle challenges, create
+            compelling experiences and make a positive impact in every project I
+            take on.
+          </p>
+        </div>
+        <div class="about-robot" id="robot-container">
+          <div class="robot-loading" id="robot-loading">
+            <div class="robot-spinner"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-entry">
+          <div class="timeline-left">
+            <h3 class="timeline-role">Product Designer</h3>
+            <span class="timeline-company">PT Bank Raya Indonesia Tbk.</span>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-dot"></div>
+            <span class="timeline-year">2024</span>
+          </div>
+          <div class="timeline-right">
+            <p>
+              Leading product design initiatives for digital banking solutions
+              at one of Indonesia's growing digital banks.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-left">
+            <h3 class="timeline-role">Product Designer</h3>
+            <span class="timeline-company">Voltron Indonesia</span>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-dot"></div>
+            <span class="timeline-year">2023</span>
+          </div>
+          <div class="timeline-right">
+            <p>
+              Designed product interfaces and user experiences for innovative
+              tech solutions.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-left">
+            <h3 class="timeline-role">HR Design & Creative Specialist</h3>
+            <span class="timeline-company">Investree</span>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-dot"></div>
+            <span class="timeline-year">2022</span>
+          </div>
+          <div class="timeline-right">
+            <p>
+              Produced creative content such as infographics, news, and special
+              day content. Created short video content about employees' daily
+              lives related to the work environment.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-left">
+            <h3 class="timeline-role">Content Writer & Design</h3>
+            <span class="timeline-company">Kementerian Pertanian</span>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-dot"></div>
+            <span class="timeline-year">2021</span>
+          </div>
+          <div class="timeline-right">
+            <p>
+              Created content for social media and websites, wrote articles
+              about agriculture. Designed infographics to enhance visual appeal.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-left">
+            <h3 class="timeline-role">Content Specialist</h3>
+            <span class="timeline-company">FIX Indonesia</span>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-dot"></div>
+            <span class="timeline-year">2021</span>
+          </div>
+          <div class="timeline-right">
+            <p>
+              Generated ideas for YouTube news content. Created scripts and
+              designed graphic assets for video production and editing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SKILLS SECTION ==================== -->
+    <section id="work" class="skills-section">
+      <h2 class="section-heading-outline">MY SKILLS</h2>
+      <div class="skills-grid">
+        <div class="skill-tag">Adobe Photoshop</div>
+        <div class="skill-tag">Mobile Interface Design</div>
+        <div class="skill-tag">Product Design</div>
+        <div class="skill-tag">Figma</div>
+        <div class="skill-tag">Adobe Illustrator</div>
+        <div class="skill-tag">UI/UX Design</div>
+        <div class="skill-tag">Prototyping</div>
+        <div class="skill-tag">Wireframing</div>
+        <div class="skill-tag">Content Creation</div>
+        <div class="skill-tag">Video Editing</div>
+        <div class="skill-tag">Visual Design</div>
+        <div class="skill-tag">User Research</div>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATION SECTION ==================== -->
+    <section id="education" class="education-section">
+      <h2 class="section-heading">Education</h2>
+      <div class="education-grid">
+        <div class="education-card">
+          <span class="education-icon">📘</span>
+          <h3 class="education-degree">Bachelor's Degree</h3>
+          <p class="education-field">Management of Media Production</p>
+          <p class="education-school">Universitas Padjadjaran</p>
+          <p class="education-period">2018 — 2022</p>
+        </div>
+        <div class="education-card">
+          <span class="education-icon">📘</span>
+          <h3 class="education-degree">Certificate</h3>
+          <p class="education-field">UI/UX Research and Design</p>
+          <p class="education-school">Binar Academy</p>
+          <p class="education-period">March 2022 — July 2022</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT / FOOTER ==================== -->
+    <section id="contact" class="contact-section">
+      <h2 class="contact-heading">CONTACT</h2>
+      <div class="contact-grid">
+        <div class="contact-col">
+          <span class="contact-label">Email</span>
+          <a href="mailto:bungaracma@gmail.com" class="contact-value"
+            >bungaracma@gmail.com</a
+          >
+        </div>
+        <div class="contact-col">
+          <span class="contact-label">Social</span>
+          <a
+            href="https://www.linkedin.com/in/rachmabunga-safitrie"
+            target="_blank"
+            rel="noopener"
+            class="contact-link"
+            >LinkedIn <span class="arrow">↗</span></a
+          >
+          <a
+            href="https://dribbble.com/bungaracma"
+            target="_blank"
+            rel="noopener"
+            class="contact-link"
+            >Dribbble <span class="arrow">↗</span></a
+          >
+        </div>
+        <div class="contact-col">
+          <span class="contact-label">Location</span>
+          <p class="contact-value">Jakarta, Indonesia</p>
+        </div>
+      </div>
+      <div class="footer-credit">
+        <p>Designed and Developed by <strong>Rachma Bunga Safitrie</strong></p>
+      </div>
+    </section>
+
+    <!-- ==================== FIXED SOCIAL SIDEBAR ==================== -->
+    <aside class="social-sidebar">
+      <a
+        href="https://www.linkedin.com/in/rachmabunga-safitrie"
+        target="_blank"
+        rel="noopener"
+        class="social-icon"
+        aria-label="LinkedIn"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+          ></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+      </a>
+      <a
+        href="https://dribbble.com/bungaracma"
+        target="_blank"
+        rel="noopener"
+        class="social-icon"
+        aria-label="Dribbble"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path>
+          <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path>
+          <path d="M8.56 2.75c4.37 6 6 12.56 6.44 21.25"></path>
+        </svg>
+      </a>
+    </aside>
+
+    <!-- Entry JS -->
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
