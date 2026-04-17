@@ -981,32 +981,60 @@ a.contact-value:hover {
   }
 
   /* Timeline */
+  .timeline {
+    padding-left: 1rem;
+  }
+
   .timeline-line {
-    left: 0;
-    transform: none;
+    left: 1rem;
+    transform: translateX(-50%);
+  }
+
+  .timeline::after {
+    left: 1rem;
   }
 
   .timeline-entry {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-    padding-left: 2rem;
+    padding-left: 3rem;
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 2.5rem;
   }
 
   .timeline-left {
     text-align: left;
     padding-right: 0;
+    order: 2;
   }
 
   .timeline-center {
-    justify-content: flex-start;
+    display: block; /* remove flex from center */
+    position: static;
+    min-width: auto;
+    order: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-year {
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    text-align: left;
+    opacity: 0.4;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    transform: translateX(-50%);
   }
 
   .timeline-right {
     padding-left: 0;
-  }
-
-  .timeline-year {
-    font-size: 1.2rem;
+    order: 3;
+    padding-top: 0.5rem;
   }
 
   /* Skills */
