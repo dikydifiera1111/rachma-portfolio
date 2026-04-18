@@ -140,13 +140,65 @@
     <!-- ==================== HERO SECTION ==================== -->
     <section id="hero" class="hero-section">
       <canvas id="hero-canvas" class="hero-canvas"></canvas>
+
+      <!-- Cursor-reactive twinkle layer -->
+      <div class="hero-twinkles" aria-hidden="true"></div>
+
       <div class="hero-container">
         <div class="hero-text-left">
           <span class="hero-greeting">Hello! I'm</span>
-          <h1 class="hero-name">RACHMA<br />BUNGA<br />SAFITRIE</h1>
+          <h1 class="hero-name" data-letter-wave>
+            <span class="hero-name-line">RACHMA</span>
+            <span class="hero-name-line">BUNGA</span>
+            <span class="hero-name-line">SAFITRIE</span>
+          </h1>
         </div>
-        <div class="hero-photo-wrapper">
+
+        <div class="hero-photo-wrapper" data-tilt>
+          <!-- Orbiting tool icons around the portrait -->
+          <div class="hero-orbit hero-orbit--1" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--figma" data-tool="Figma" title="Figma">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F24E1E" d="M8 24a4 4 0 0 0 4-4v-4H8a4 4 0 0 0 0 8z"/><path fill="#A259FF" d="M4 12a4 4 0 0 0 4 4h4V8H8a4 4 0 0 0-4 4z"/><path fill="#0ACF83" d="M4 4a4 4 0 0 0 4 4h4V0H8a4 4 0 0 0-4 4z"/><path fill="#FF7262" d="M12 0v8h4a4 4 0 0 0 0-8h-4z"/><path fill="#1ABCFE" d="M20 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--2" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--ps" data-tool="Photoshop" title="Adobe Photoshop">
+              <span>Ps</span>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--3" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--ai" data-tool="Illustrator" title="Adobe Illustrator">
+              <span>Ai</span>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--4" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--ae" data-tool="After Effects" title="Adobe After Effects">
+              <span>Ae</span>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--5" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--lottie" data-tool="Lottie" title="Lottie">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--6" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--stitch" data-tool="Google Stitch" title="Google Stitch">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg>
+            </div>
+          </div>
+          <div class="hero-orbit hero-orbit--9" aria-hidden="true">
+            <div class="hero-orbit__dot hero-orbit__dot--atlassian" data-tool="Atlassian" title="Atlassian">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7.12 11.084a.68.68 0 00-1.152.165L.075 22.998a.7.7 0 00.625 1.01h8.2a.67.67 0 00.625-.382c1.77-3.654.7-9.22-2.405-12.542zM11.45.388a15.24 15.24 0 00-.888 15.048l3.954 7.91a.7.7 0 00.624.386h8.2a.7.7 0 00.624-1.01S12.64.63 12.407.157A.61.61 0 0011.45.388z"/></svg>
+            </div>
+          </div>
+
           <div class="hero-photo-glow"></div>
+
+          <!-- Speech bubble easter egg -->
+          <div class="hero-bubble" aria-hidden="true">
+            <span>Hi there! 👋</span>
+          </div>
+
           <img
             src="./data/Rachma Bunga Safitrie.jpeg"
             alt="Rachma Bunga Safitrie - UI/UX Designer"
@@ -156,6 +208,7 @@
             fetchpriority="high"
           />
         </div>
+
         <div class="hero-text-right">
           <span class="hero-creative-label">A Creative</span>
           <div class="hero-role-switcher">
@@ -163,6 +216,15 @@
           </div>
         </div>
       </div>
+
+      <!-- Scroll hint toward the robot -->
+      <a href="#about" class="hero-scroll-hint" aria-label="Meet my little friend below">
+        <span class="hero-scroll-hint__label">meet my little friend</span>
+        <span class="hero-scroll-hint__chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </a>
+
       <!-- Floating orb -->
       <div class="floating-orb"></div>
     </section>
