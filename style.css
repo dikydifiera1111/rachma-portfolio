@@ -1557,14 +1557,71 @@ a.contact-value:hover {
 }
 
 @media (max-width: 768px) {
+  .portfolio-section {
+    padding-left: clamp(12px, 4vw, 24px);
+    padding-right: clamp(12px, 4vw, 24px);
+  }
   .portfolio-stage {
-    min-height: 500px;
-    height: 80vh;
+    min-height: 520px;
+    height: 85vh;
+    border-radius: 18px;
   }
   .portfolio-card {
-    width: 64px;
-    height: 90px;
-    left: -32px;
-    top: -45px;
+    width: 58px;
+    height: 82px;
+    left: -29px;
+    top: -41px;
+  }
+  .portfolio-intro-title,
+  .portfolio-outro-title {
+    font-size: 1.35rem;
+  }
+  .portfolio-intro-sub {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+  }
+  .portfolio-caption {
+    bottom: 5%;
+    padding: 0 1rem;
+  }
+  .portfolio-caption-project {
+    font-size: 1.1rem;
+  }
+  .portfolio-caption-desc {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+  }
+  .portfolio-outro {
+    top: 8%;
+    width: 88%;
+  }
+  .portfolio-outro-cta {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.8rem;
+  }
+  /* Tighter gap to social-3d on mobile so sections feel connected */
+  #portfolio + .social-3d-section,
+  .portfolio-section + .social-3d-section {
+    margin-top: -16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-stage {
+    min-height: 460px;
+    height: 78vh;
+  }
+  .portfolio-card {
+    width: 52px;
+    height: 74px;
+    left: -26px;
+    top: -37px;
+  }
+  .portfolio-card-project {
+    font-size: 0.65rem;
+  }
+  .portfolio-card-view {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
   }
 }
