@@ -150,3 +150,15 @@
 - Combined the original `Generating...` loader with the new multi-language text cycler in sequence.
 - Matched Tailwind CSS sizing/coloring exactly to project variables (`--bg-primary`, `--text-primary`).
 - Pushed changes to GitHub Pages deployment.
+
+## Session 7 (2026-04-18)
+- Referenced `igloo.inc` animated square-bracket target hover effect for social links.
+- Replaced vertical `.social-sidebar` (hidden on mobile) with fixed bottom horizontal `.igloo-social-bar`.
+- Applied `target` corner pseudo-elements (`::before`/`::after` on `.igloo-link` and `.igloo-corners`) using native CSS animated `transform: translate()` mapping.
+- Brackets glow seamlessly with the project's `--accent` color. 
+- Awaiting user testing; deliberately bypassed push to remote.
+
+## Session 8 (2026-04-18)
+- Acknowledged request for igloo.inc 3D particle morphing on social section.
+- Added Three.js to implement a point cloud morphing engine.
+- Explained limitations regarding proprietary 3D asset generation (Penguin mesh).

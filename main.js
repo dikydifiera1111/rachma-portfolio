@@ -13,6 +13,7 @@ import { initSkills } from "./js/skills.js";
 import { initParticles } from "./js/particles.js";
 import { initRobot } from "./js/robot.js";
 import { initBoxes } from "./js/boxes.js";
+import { initSocial3D } from "./js/social3d.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSkills();
   initRobot();
   initBoxes();
+  initSocial3D();
 
   console.log("🚀 Portfolio initialized");
 });

@@ -905,39 +905,109 @@ a.contact-value:hover {
 }
 
 /* ============================================
-   FIXED SOCIAL SIDEBAR
+   IGLOO ANIMATED SOCIAL BAR
    ============================================ */
-.social-sidebar {
+.igloo-social-bar {
   position: fixed;
-  left: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   z-index: 100;
 }
 
-.social-sidebar::after {
-  content: "";
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--accent-secondary), transparent);
-  margin-top: 0.25rem;
-}
-
-.social-icon {
-  color: var(--text-secondary);
-  transition: color var(--transition-fast), transform var(--transition-fast);
-  display: flex;
+.igloo-link {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: color var(--transition-fast);
 }
 
-.social-icon:hover {
-  color: var(--accent);
-  transform: scale(1.2);
+.social-3d-track .igloo-link {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease, color var(--transition-fast);
+}
+
+.social-3d-track .igloo-link.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.igloo-link:hover,
+.igloo-link:focus {
+  color: var(--text-primary);
+  outline: none;
+}
+
+/* The Four Corners for Hover State */
+.igloo-link::before,
+.igloo-link::after,
+.igloo-corners::before,
+.igloo-corners::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid var(--accent);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Top left */
+.igloo-link::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  transform: translate(-4px, -4px);
+}
+
+/* Bottom right */
+.igloo-link::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  transform: translate(4px, 4px);
+}
+
+/* Top right */
+.igloo-corners::before {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  transform: translate(4px, -4px);
+}
+
+/* Bottom left */
+.igloo-corners::after {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  transform: translate(-4px, 4px);
+}
+
+.igloo-link:hover::before,
+.igloo-link:hover::after,
+.igloo-link:hover .igloo-corners::before,
+.igloo-link:hover .igloo-corners::after {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 /* ============================================
@@ -1106,9 +1176,15 @@ a.contact-value:hover {
     font-size: clamp(2rem, 8vw, 3rem);
   }
 
-  /* Social Sidebar - hidden on mobile */
-  .social-sidebar {
-    display: none;
+  /* Igloo Social Bar - adjust for mobile */
+  .igloo-social-bar {
+    bottom: 1.5rem;
+    gap: 0.75rem;
+  }
+  
+  .igloo-link {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
   }
 }
 
@@ -1175,4 +1251,90 @@ a.contact-value:hover {
   height: calc(100vh + 300px);
   z-index: 9999;
   pointer-events: none;
+}
+
+/* ============================================
+   IGLOO 3D SOCIAL SECTION
+   ============================================ */
+.social-3d-section {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: hidden;
+  padding-bottom: 2rem;
+}
+
+#social-3d-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.social-3d-controls {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(13, 11, 15, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(180, 140, 222, 0.1);
+}
+
+.social-3d-track {
+  width: 140px;
+  overflow: hidden;
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-arrow {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-arrow:hover {
+  color: var(--accent);
+}
+
+.social-3d-track .igloo-social-bar {
+  /* Overriding the fixed bottom bar for the local 3D track */
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  display: grid !important;
+  place-items: center;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.social-3d-track .igloo-social-bar .igloo-link {
+  grid-area: 1 / 1;
+}
+
+/* Specific reset for the 3D local block */
+.social-3d-section .igloo-social-bar {
+  z-index: auto;
 }
