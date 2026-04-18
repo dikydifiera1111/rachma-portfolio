@@ -16,6 +16,7 @@ import { initRobot } from "./js/robot.js";
 import { initBoxes } from "./js/boxes.js";
 import { initSocial3D } from "./js/social3d.js";
 import { initPortfolio } from "./js/portfolio.js";
+import { initHeadings } from "./js/headings.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBoxes();
   initSocial3D();
   initPortfolio();
+  initHeadings();
 
   console.log("🚀 Portfolio initialized");
 });

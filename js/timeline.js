@@ -25,6 +25,18 @@ export function initTimeline() {
       delay: i * 0.1,
       ease: "power3.out",
     });
+
+    // Light up the row when the laser line's tip reaches this entry's dot.
+    // The laser scrubs between "top 80%" and "bottom 20%" of .timeline, so
+    // each entry's dot aligns to the tip around when the entry crosses ~60%
+    // of the viewport. `toggleClass` on the entry handles both enter+leave-back
+    // so scrolling up dims the row again.
+    ScrollTrigger.create({
+      trigger: entry,
+      start: "top 60%",
+      end: "bottom 40%",
+      toggleClass: { targets: entry, className: "is-lit" },
+    });
   });
 
   // Animate the timeline line growth

@@ -268,6 +268,8 @@ p {
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 3rem;
+  transition: color 0.6s ease, text-shadow 0.6s ease, opacity 0.6s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .section-heading-outline {
@@ -282,6 +284,78 @@ p {
   position: relative;
   z-index: 2;
   pointer-events: none;
+  transition: -webkit-text-stroke-color 0.6s ease, color 0.6s ease,
+    text-shadow 0.6s ease, opacity 0.8s ease,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- Scroll-reveal initial (off) state --- */
+.section-heading-outline:not(.is-revealed),
+.section-heading:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* --- Revealed + laser-lit state --- */
+.section-heading.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-heading.is-lit {
+  color: var(--accent);
+  text-shadow: 0 0 28px var(--glow), 0 0 56px rgba(180, 140, 222, 0.25);
+}
+
+.section-heading-outline.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  -webkit-text-stroke-color: var(--accent);
+}
+
+.section-heading-outline.is-lit {
+  text-shadow: 0 0 28px var(--glow), 0 0 56px rgba(180, 140, 222, 0.3);
+  -webkit-text-stroke-color: var(--accent);
+}
+
+/* Sweeping laser highlight across the outlined heading on first reveal */
+.section-heading-outline {
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(180, 140, 222, 0.85) 50%,
+    transparent 58%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.section-heading-outline.is-revealed {
+  animation: heading-laser-sweep 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes heading-laser-sweep {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-heading-outline,
+  .section-heading {
+    transition: none;
+    transform: none !important;
+  }
+  .section-heading-outline.is-revealed {
+    animation: none;
+  }
 }
 
 /* ============================================
@@ -825,6 +899,7 @@ p {
   font-weight: 800;
   color: var(--text-primary);
   opacity: 0.2;
+  transition: opacity 0.5s ease, color 0.5s ease, text-shadow 0.5s ease;
 }
 
 .timeline-dot {
@@ -834,6 +909,7 @@ p {
   background: var(--accent);
   box-shadow: 0 0 12px var(--glow), 0 0 24px rgba(180, 140, 222, 0.15);
   flex-shrink: 0;
+  transition: box-shadow 0.5s ease, transform 0.5s ease;
 }
 
 .timeline-right {
@@ -843,6 +919,50 @@ p {
 .timeline-right p {
   font-size: 0.95rem;
   line-height: 1.7;
+  transition: color 0.5s ease, opacity 0.5s ease;
+}
+
+.timeline-role,
+.timeline-company {
+  transition: color 0.5s ease, text-shadow 0.5s ease, opacity 0.5s ease;
+}
+
+/* Dim the whole row until the laser line reaches it */
+.timeline-entry .timeline-role,
+.timeline-entry .timeline-right p {
+  opacity: 0.55;
+}
+.timeline-entry .timeline-company {
+  opacity: 0.7;
+}
+
+/* LIT state — triggered when the laser line's tip crosses this entry's dot */
+.timeline-entry.is-lit .timeline-year {
+  opacity: 1;
+  color: var(--accent);
+  text-shadow: 0 0 24px var(--glow), 0 0 48px rgba(180, 140, 222, 0.25);
+}
+
+.timeline-entry.is-lit .timeline-role {
+  opacity: 1;
+  color: var(--text-primary);
+  text-shadow: 0 0 20px rgba(180, 140, 222, 0.18);
+}
+
+.timeline-entry.is-lit .timeline-company {
+  opacity: 1;
+  text-shadow: 0 0 14px var(--glow);
+}
+
+.timeline-entry.is-lit .timeline-right p {
+  opacity: 1;
+  color: var(--text-primary);
+}
+
+.timeline-entry.is-lit .timeline-dot {
+  box-shadow: 0 0 16px var(--accent), 0 0 36px var(--glow),
+    0 0 64px rgba(180, 140, 222, 0.35);
+  transform: scale(1.15);
 }
 
 /* Bottom glow on the timeline line */
