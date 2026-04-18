@@ -9,6 +9,17 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// Import images as Vite URL assets so they are fingerprinted and copied
+// into dist/ with a base-path-correct URL (fixes GitHub Pages subpath).
+import cronicle1 from "../data/work/cronicle-1.png?url";
+import cronicle2 from "../data/work/cronicle-2.png?url";
+import wellpad1 from "../data/work/wellpad-1.png?url";
+import wellpad2 from "../data/work/wellpad-2.png?url";
+import raya1 from "../data/work/raya-1.png?url";
+import raya2 from "../data/work/raya-2.png?url";
+import maxim1 from "../data/work/maxim-1.png?url";
+import maxim2 from "../data/work/maxim-2.png?url";
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Direct Dribbble shot URLs — mapped per project by Rachma.
@@ -27,56 +38,56 @@ const PROJECTS = [
     name: "Cronicle",
     desc: "Fashion e-commerce · lavender",
     color: "#C8B6E2",
-    img: "./data/work/cronicle-1.png",
+    img: cronicle1,
     url: SHOT_URLS.Cronicle,
   },
   {
     name: "Cronicle",
     desc: "Product detail · Vindy Knit Cardigan",
     color: "#C8B6E2",
-    img: "./data/work/cronicle-2.png",
+    img: cronicle2,
     url: SHOT_URLS.Cronicle,
   },
   {
     name: "Wellpad",
     desc: "Wellness in your hand · teal",
     color: "#2F6A6A",
-    img: "./data/work/wellpad-1.png",
+    img: wellpad1,
     url: SHOT_URLS.Wellpad,
   },
   {
     name: "Wellpad",
     desc: "Home · Hello Lala! dashboard",
     color: "#2F6A6A",
-    img: "./data/work/wellpad-2.png",
+    img: wellpad2,
     url: SHOT_URLS.Wellpad,
   },
   {
     name: "Raya",
     desc: "Loyalty dashboard · navy",
     color: "#0B2A5B",
-    img: "./data/work/raya-1.png",
+    img: raya1,
     url: SHOT_URLS.Raya,
   },
   {
     name: "Raya",
     desc: "Tier progression · Beginner → Ultimate",
     color: "#0B2A5B",
-    img: "./data/work/raya-2.png",
+    img: raya2,
     url: SHOT_URLS.Raya,
   },
   {
     name: "Maxim",
     desc: "App redesign · yellow",
     color: "#F7D417",
-    img: "./data/work/maxim-2.png",
+    img: maxim2,
     url: SHOT_URLS.Maxim,
   },
   {
     name: "Maxim",
     desc: "Home · service grid & Maxim Pay",
     color: "#F7D417",
-    img: "./data/work/maxim-1.png",
+    img: maxim1,
     url: SHOT_URLS.Maxim,
   },
 ];
