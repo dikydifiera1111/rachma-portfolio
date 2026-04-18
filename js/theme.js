@@ -52,15 +52,14 @@ export function initTheme() {
   const initial = getStoredTheme() === THEMES.LIGHT ? THEMES.LIGHT : THEMES.DARK;
   applyTheme(initial);
 
-  const btn = document.getElementById("theme-toggle");
-  if (!btn) return;
+  const input = document.getElementById("theme-toggle");
+  if (!input) return;
 
-  btn.addEventListener("click", () => {
-    const current =
-      document.documentElement.getAttribute("data-theme") === "light"
-        ? THEMES.LIGHT
-        : THEMES.DARK;
-    const next = current === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
+  // Sky-toggle convention: checked = night (dark), unchecked = day (light).
+  input.checked = initial === THEMES.DARK;
+
+  input.addEventListener("change", () => {
+    const next = input.checked ? THEMES.DARK : THEMES.LIGHT;
     applyTheme(next);
     storeTheme(next);
   });

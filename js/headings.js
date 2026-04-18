@@ -27,4 +27,16 @@ export function initHeadings() {
       },
     });
   });
+
+  // Lamp reveal — widens the cones + lights the filament as the skills
+  // section comes into view, just before the heading's laser sweep fires.
+  const lamp = document.querySelector(".lamp");
+  if (lamp) {
+    ScrollTrigger.create({
+      trigger: lamp,
+      start: "top 80%",
+      once: true,
+      onEnter: () => lamp.classList.add("is-lit"),
+    });
+  }
 }
