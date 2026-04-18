@@ -1,0 +1,5 @@
+commit 62a44ab7afb3086fcab389bf9bfa06265be06eea
+Author: dikydifiera1111 <diky.difiera@bankraya.co.id>
+Date:   Sat Apr 18 01:35:12 2026 +0700
+
+    chore: configure github pages deployment
