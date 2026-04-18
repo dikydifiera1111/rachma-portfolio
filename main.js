@@ -18,6 +18,7 @@ import { initSocial3D } from "./js/social3d.js";
 import { initPortfolio } from "./js/portfolio.js";
 import { initHeadings } from "./js/headings.js";
 import { initParallax } from "./js/parallax.js";
+import { initFocusRail } from "./js/focus-rail.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPortfolio();
   initHeadings();
   initParallax();
+  initFocusRail();
 
   console.log("🚀 Portfolio initialized");
 });
