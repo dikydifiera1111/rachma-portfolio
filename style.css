@@ -1355,6 +1355,438 @@ p {
 }
 
 /* ============================================
+   PARALLAX TRANSITION
+   Decorative break between timeline and skills.
+   Four layers scroll at different speeds via GSAP.
+   ============================================ */
+.parallax {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.parallax__header {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 520px;
+  max-height: 780px;
+}
+
+.parallax__visuals {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.parallax__layers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.parallax__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* Layer 1 — nebula wash (farthest back, moves most) */
+.parallax__layer--nebula {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 30% 40%,
+      rgba(124, 92, 170, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 75% 65%,
+      rgba(180, 140, 222, 0.25),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 90% 60% at 50% 100%,
+      rgba(180, 140, 222, 0.18),
+      transparent 70%
+    );
+  filter: blur(30px);
+}
+
+/* Layer 2 — silhouette grid of tool icons */
+.parallax__layer--icons {
+  opacity: 0.16;
+}
+.parallax__icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  width: min(86%, 1100px);
+  height: 60%;
+  place-items: center;
+}
+.parallax__icon-grid img {
+  width: clamp(3rem, 6vw, 5.5rem);
+  height: clamp(3rem, 6vw, 5.5rem);
+  object-fit: contain;
+  /* Tint all icons to our accent so the silhouette reads as one palette */
+  filter: brightness(0) saturate(100%) invert(72%) sepia(27%) saturate(579%)
+    hue-rotate(227deg) brightness(91%) contrast(91%);
+}
+.parallax__icon-grid img:nth-child(odd) { transform: translateY(-1rem); }
+.parallax__icon-grid img:nth-child(even) { transform: translateY(1rem); }
+
+/* Layer 3 — huge outline wordmark */
+.parallax__layer--title {
+  z-index: 2;
+}
+.parallax__title {
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 18vw, 16rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+  text-shadow: 0 0 80px rgba(180, 140, 222, 0.25);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Layer 4 — foreground haze + glowing orb */
+.parallax__layer--haze {
+  z-index: 3;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(var(--bg-card-rgb), 0.2) 50%,
+    rgba(var(--bg-card-rgb), 0.75) 100%
+  );
+  pointer-events: none;
+}
+.parallax__haze-orb {
+  position: absolute;
+  bottom: -8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60vw, 40rem);
+  height: min(60vw, 40rem);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(180, 140, 222, 0.35),
+    transparent 60%
+  );
+  filter: blur(40px);
+}
+
+/* Top + bottom edges blend into neighboring sections */
+.parallax__edge-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(
+    to bottom,
+    var(--bg-primary),
+    transparent
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+.parallax__fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(
+    to top,
+    var(--bg-primary),
+    transparent
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Light theme: soften the wordmark so it reads against white,
+   and dial back the nebula's intensity. */
+:root[data-theme="light"] .parallax__title {
+  -webkit-text-stroke-color: var(--accent-secondary);
+  text-shadow: 0 0 60px rgba(124, 92, 170, 0.18);
+}
+:root[data-theme="light"] .parallax__layer--nebula {
+  opacity: 0.7;
+}
+:root[data-theme="light"] .parallax__layer--icons {
+  opacity: 0.2;
+}
+
+/* Mobile: shorter section so the page doesn't feel padded out */
+@media (max-width: 768px) {
+  .parallax__header { height: 75vh; min-height: 420px; }
+  .parallax__icon-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* ---------- Skills Hero (headline + dual marquee) ---------- */
+.skills-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.skills-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 1rem;
+}
+
+.skills-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.skills-hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.skills-hero-meta p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Replaces the single scramble button — a row of tool chips */
+.skills-tools-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tool-pill {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: rgba(var(--bg-card-rgb), 0.5);
+  cursor: default;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-pill:hover {
+  color: #fff;
+  border-color: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  box-shadow: 0 0 20px var(--glow), 0 0 40px rgba(180, 140, 222, 0.1);
+  transform: translateY(-1px);
+}
+
+:root[data-theme="light"] .tool-pill:hover {
+  color: #fff;
+}
+
+/* ---------- Marquee ---------- */
+.skills-hero-right {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  gap: 1rem;
+  --duration: 32s;
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  gap: 1rem;
+  animation: marquee-scroll var(--duration) linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - 1rem)); }
+}
+
+/* Soft fade on horizontal edges */
+.marquee-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5rem;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee-edge-left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--bg-primary),
+    rgba(var(--bg-card-rgb), 0)
+  );
+}
+.marquee-edge-right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--bg-primary),
+    rgba(var(--bg-card-rgb), 0)
+  );
+}
+
+/* ---------- Tool cards ---------- */
+.tool-card {
+  flex-shrink: 0;
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border-soft);
+  background: rgba(var(--bg-card-rgb), 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Subtle purple aura on the frame to tie into our palette */
+.tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 50% 120%,
+    var(--glow),
+    transparent 60%
+  );
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.tool-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25),
+    0 0 0 1px var(--accent), 0 0 28px var(--glow);
+  transform: translateY(-4px);
+}
+.tool-card:hover::before { opacity: 0.9; }
+
+.tool-card img {
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+  /* tint every logo to the accent so the row reads as one palette */
+  filter: brightness(0) saturate(100%) invert(72%) sepia(27%) saturate(579%)
+    hue-rotate(227deg) brightness(91%) contrast(91%);
+  transition: filter 0.4s ease, transform 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.tool-card:hover img {
+  transform: scale(1.08);
+}
+
+.tool-card span {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+.tool-card:hover span {
+  color: var(--text-primary);
+}
+
+/* Light theme: slightly lighter purple tint that reads on white */
+:root[data-theme="light"] .tool-card img {
+  filter: brightness(0) saturate(100%) invert(36%) sepia(45%) saturate(726%)
+    hue-rotate(237deg) brightness(86%) contrast(91%);
+}
+
+:root[data-theme="light"] .marquee-edge-left {
+  background: linear-gradient(to right, var(--bg-primary), rgba(250, 250, 250, 0));
+}
+:root[data-theme="light"] .marquee-edge-right {
+  background: linear-gradient(to left, var(--bg-primary), rgba(250, 250, 250, 0));
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .skills-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .skills-hero-left { padding-right: 0; }
+  .tool-card { width: 8rem; height: 8rem; }
+  .tool-card img { width: 2.2rem; height: 2.2rem; }
+  .marquee-edge { width: 3rem; }
+}
+
+@media (max-width: 480px) {
+  .tool-card { width: 7rem; height: 7rem; border-radius: 1rem; }
+  .tool-card img { width: 2rem; height: 2rem; }
+  .tool-card span { font-size: 0.7rem; }
+}
+
+/* ============================================
    EDUCATION SECTION
    ============================================ */
 .education-section {

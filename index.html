@@ -267,6 +267,44 @@
       </div>
     </section>
 
+    <!-- ==================== PARALLAX TRANSITION ==================== -->
+    <section class="parallax" aria-hidden="true">
+      <div class="parallax__header">
+        <div class="parallax__visuals">
+          <div class="parallax__edge-top"></div>
+          <div class="parallax__layers" data-parallax-layers>
+            <!-- Layer 1 (farthest back): soft purple nebula wash -->
+            <div data-parallax-layer="1" class="parallax__layer parallax__layer--nebula"></div>
+
+            <!-- Layer 2: silhouette grid of design-tool icons -->
+            <div data-parallax-layer="2" class="parallax__layer parallax__layer--icons">
+              <div class="parallax__icon-grid">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobephotoshop.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeillustrator.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/lottiefiles.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobexd.svg" alt="" />
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg" alt="" />
+              </div>
+            </div>
+
+            <!-- Layer 3: huge wordmark -->
+            <div data-parallax-layer="3" class="parallax__layer parallax__layer--title">
+              <h2 class="parallax__title">TOOLKIT</h2>
+            </div>
+
+            <!-- Layer 4 (closest): foreground purple haze + glow orb -->
+            <div data-parallax-layer="4" class="parallax__layer parallax__layer--haze">
+              <div class="parallax__haze-orb"></div>
+            </div>
+          </div>
+          <div class="parallax__fade"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== SKILLS SECTION ==================== -->
     <section id="work" class="skills-section">
       <!-- Lamp (scroll-triggered light cone above the heading) -->
@@ -282,19 +320,110 @@
       </div>
 
       <h2 class="section-heading-outline skills-heading">MY SKILLS</h2>
-      <div class="skills-grid">
-        <div class="skill-tag">Adobe Photoshop</div>
-        <div class="skill-tag">Mobile Interface Design</div>
-        <div class="skill-tag">Product Design</div>
-        <div class="skill-tag">Figma</div>
-        <div class="skill-tag">Adobe Illustrator</div>
-        <div class="skill-tag">UI/UX Design</div>
-        <div class="skill-tag">Prototyping</div>
-        <div class="skill-tag">Wireframing</div>
-        <div class="skill-tag">Content Creation</div>
-        <div class="skill-tag">Video Editing</div>
-        <div class="skill-tag">Visual Design</div>
-        <div class="skill-tag">User Research</div>
+      <div class="skills-hero">
+        <!-- Left: headline + scramble pill -->
+        <div class="skills-hero-left">
+          <h3 class="skills-hero-title">
+            Crafting interfaces with a trusted toolkit
+          </h3>
+          <div class="skills-hero-meta">
+            <p>Design · Motion · Prototyping</p>
+            <p>Jakarta, Indonesia</p>
+          </div>
+          <div class="skills-tools-pills" aria-label="Design tools">
+            <span class="tool-pill" data-tool="Figma">Figma</span>
+            <span class="tool-pill" data-tool="Adobe Photoshop">Adobe Photoshop</span>
+            <span class="tool-pill" data-tool="Adobe After Effects">Adobe After Effects</span>
+            <span class="tool-pill" data-tool="Adobe Illustrator">Adobe Illustrator</span>
+            <span class="tool-pill" data-tool="Lottie">Lottie</span>
+            <span class="tool-pill" data-tool="Google Stitch">Google Stitch</span>
+          </div>
+        </div>
+
+        <!-- Right: dual-row marquee of tool logos -->
+        <div class="skills-hero-right">
+          <div class="marquee marquee-reverse" data-speed="32">
+            <div class="marquee-track">
+              <!-- set A -->
+              <div class="tool-card" data-brand="figma">
+                <img alt="Figma" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" />
+                <span>Figma</span>
+              </div>
+              <div class="tool-card" data-brand="photoshop">
+                <img alt="Adobe Photoshop" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobephotoshop.svg" />
+                <span>Photoshop</span>
+              </div>
+              <div class="tool-card" data-brand="aftereffects">
+                <img alt="Adobe After Effects" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg" />
+                <span>After Effects</span>
+              </div>
+              <div class="tool-card" data-brand="illustrator">
+                <img alt="Adobe Illustrator" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeillustrator.svg" />
+                <span>Illustrator</span>
+              </div>
+            </div>
+            <div class="marquee-track" aria-hidden="true">
+              <div class="tool-card" data-brand="figma">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" />
+                <span>Figma</span>
+              </div>
+              <div class="tool-card" data-brand="photoshop">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobephotoshop.svg" />
+                <span>Photoshop</span>
+              </div>
+              <div class="tool-card" data-brand="aftereffects">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg" />
+                <span>After Effects</span>
+              </div>
+              <div class="tool-card" data-brand="illustrator">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeillustrator.svg" />
+                <span>Illustrator</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="marquee" data-speed="32">
+            <div class="marquee-track">
+              <div class="tool-card" data-brand="lottie">
+                <img alt="Lottie" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/lottiefiles.svg" />
+                <span>Lottie</span>
+              </div>
+              <div class="tool-card" data-brand="stitch">
+                <img alt="Google Stitch" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" />
+                <span>Google Stitch</span>
+              </div>
+              <div class="tool-card" data-brand="xd">
+                <img alt="Adobe XD" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobexd.svg" />
+                <span>Adobe XD</span>
+              </div>
+              <div class="tool-card" data-brand="premiere">
+                <img alt="Adobe Premiere" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg" />
+                <span>Premiere Pro</span>
+              </div>
+            </div>
+            <div class="marquee-track" aria-hidden="true">
+              <div class="tool-card" data-brand="lottie">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/lottiefiles.svg" />
+                <span>Lottie</span>
+              </div>
+              <div class="tool-card" data-brand="stitch">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" />
+                <span>Google Stitch</span>
+              </div>
+              <div class="tool-card" data-brand="xd">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobexd.svg" />
+                <span>Adobe XD</span>
+              </div>
+              <div class="tool-card" data-brand="premiere">
+                <img alt="" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg" />
+                <span>Premiere Pro</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="marquee-edge marquee-edge-left"></div>
+          <div class="marquee-edge marquee-edge-right"></div>
+        </div>
       </div>
     </section>
 
