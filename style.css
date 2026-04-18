@@ -308,6 +308,20 @@ p {
   border-bottom: 1px solid var(--border-soft);
 }
 
+/* Light theme: give the navbar a subtle frosted surface at all times
+   so text has a legible backdrop against the light hero canvas. */
+:root[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+:root[data-theme="light"] .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 24px rgba(60, 40, 90, 0.06);
+}
+
 /* --- Theme Toggle Button --- */
 .theme-toggle {
   position: relative;
@@ -329,6 +343,16 @@ p {
   color: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 16px var(--glow);
+}
+
+/* Light theme: stronger border + subtle tinted bg so the pill reads clearly */
+:root[data-theme="light"] .theme-toggle {
+  background: rgba(124, 92, 170, 0.06);
+  border-color: rgba(124, 92, 170, 0.25);
+}
+
+:root[data-theme="light"] .theme-toggle:hover {
+  background: rgba(124, 92, 170, 0.12);
 }
 
 .theme-toggle:focus-visible {
@@ -656,6 +680,45 @@ p {
   background: rgba(var(--bg-card-rgb), 0.4);
   border: 1px solid rgba(180, 140, 222, 0.08);
   pointer-events: auto;
+  transition: background 0.4s ease, border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Light theme: frame the Spline robot on a dark "stage" card so its baked-in
+   dark base reads as intentional (a product pedestal) rather than a clash. */
+:root[data-theme="light"] .about-robot {
+  background: radial-gradient(
+      ellipse at 50% 40%,
+      #2a1f3d 0%,
+      #130b1f 65%,
+      #0a0612 100%
+    );
+  border: 1px solid rgba(124, 92, 170, 0.35);
+  box-shadow: 0 20px 60px rgba(60, 40, 90, 0.18),
+    0 8px 24px rgba(60, 40, 90, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Soft lavender aura behind the robot to tie it back to the light palette */
+:root[data-theme="light"] .about-robot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(180, 140, 222, 0.5),
+    rgba(124, 92, 170, 0.1) 40%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .robot-viewer {
