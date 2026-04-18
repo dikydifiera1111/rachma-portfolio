@@ -20,6 +20,7 @@ import { initHeadings } from "./js/headings.js";
 import { initParallax } from "./js/parallax.js";
 import { initFocusRail } from "./js/focus-rail.js";
 import { initFooterCta } from "./js/footer-cta.js";
+import { initCursor } from "./js/cursor.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initParallax();
   initFocusRail();
   initFooterCta();
+  initCursor();
 
   console.log("🚀 Portfolio initialized");
 });

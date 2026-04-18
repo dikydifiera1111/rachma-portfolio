@@ -3015,6 +3015,40 @@ a.contact-value:hover {
 }
 
 /* ============================================
+   CUSTOM CURSOR — inverted blend with purple tint
+   ============================================ */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: #e6d4ff;
+  mix-blend-mode: difference;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+
+.custom-cursor.is-hovering {
+  background: var(--accent);
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor { display: none; }
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto !important;
+  }
+}
+
+/* ============================================
    MOTION CTA FOOTER — contact trigger section
    ============================================ */
 .cta-footer {
