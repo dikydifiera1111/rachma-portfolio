@@ -58,9 +58,55 @@ export function initTheme() {
   // Sky-toggle convention: checked = night (dark), unchecked = day (light).
   input.checked = initial === THEMES.DARK;
 
-  input.addEventListener("change", () => {
+  input.addEventListener("change", (event) => {
     const next = input.checked ? THEMES.DARK : THEMES.LIGHT;
-    applyTheme(next);
+    runThemeTransition(event, next);
     storeTheme(next);
+  });
+}
+
+/**
+ * Circular reveal from the toggle position using the View Transitions API.
+ * Falls back to a plain apply on unsupported browsers (Firefox / older Safari).
+ */
+function runThemeTransition(event, next) {
+  const canAnimate =
+    typeof document.startViewTransition === "function" &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!canAnimate) {
+    applyTheme(next);
+    return;
+  }
+
+  // Anchor the reveal on the toggle's center. Fall back to viewport center.
+  const toggle = document.querySelector(".theme-switch") ||
+    document.getElementById("theme-toggle");
+  let originX = window.innerWidth - 64;
+  let originY = 64;
+  if (toggle) {
+    const rect = toggle.getBoundingClientRect();
+    originX = rect.left + rect.width / 2;
+    originY = rect.top + rect.height / 2;
+  }
+
+  // Radius = farthest viewport corner, so the circle always fully covers.
+  const endRadius = Math.hypot(
+    Math.max(originX, window.innerWidth - originX),
+    Math.max(originY, window.innerHeight - originY),
+  );
+
+  // Expose origin to CSS for the @keyframes circle-in animation.
+  document.documentElement.style.setProperty("--tt-x", `${originX}px`);
+  document.documentElement.style.setProperty("--tt-y", `${originY}px`);
+  document.documentElement.style.setProperty("--tt-r", `${endRadius}px`);
+
+  const transition = document.startViewTransition(() => applyTheme(next));
+
+  // Clean the custom props after the animation so they don't persist.
+  transition.finished.finally(() => {
+    document.documentElement.style.removeProperty("--tt-x");
+    document.documentElement.style.removeProperty("--tt-y");
+    document.documentElement.style.removeProperty("--tt-r");
   });
 }

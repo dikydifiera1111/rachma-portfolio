@@ -3790,3 +3790,40 @@ body.has-custom-cursor * {
   .hero-orbit__dot { width: 34px; height: 34px; font-size: 0.8rem; }
   .hero-orbit__dot svg { width: 18px; height: 18px; }
 }
+
+/* ============================================
+   VIEW TRANSITION — circular theme reveal
+   Anchored at --tt-x / --tt-y (toggle center).
+   Chromium + Safari 18+; Firefox falls back to
+   a plain apply (no animation).
+   ============================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Old snapshot sits underneath, new snapshot grows from the toggle
+   as an expanding circle — feels like flipping a physical switch. */
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-circle-in 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes theme-circle-in {
+  from {
+    clip-path: circle(0 at var(--tt-x, 50%) var(--tt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--tt-r, 150vmax) at var(--tt-x, 50%) var(--tt-y, 50%));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
