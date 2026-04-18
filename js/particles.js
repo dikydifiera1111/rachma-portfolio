@@ -100,10 +100,10 @@ export function initParticles() {
             const distMouse = Math.sqrt(dx * dx + dy * dy);
 
             if (distMouse < mouse.radius) {
-              // Bright white lines near cursor
-              ctx.strokeStyle = `rgba(234, 229, 236, ${opacityValue})`;
+              // Bright accent near cursor (uses theme-primary-text rgb)
+              ctx.strokeStyle = `rgba(${highlightRgb}, ${opacityValue})`;
             } else {
-              // Purple accent lines (#b48cde toned)
+              // Purple accent lines
               ctx.strokeStyle = `rgba(180, 140, 222, ${opacityValue})`;
             }
           } else {
@@ -120,10 +120,31 @@ export function initParticles() {
     }
   }
 
+  // Cache theme-dependent colors so we don't re-query styles every frame.
+  // Invalidated on the custom "themechange" event dispatched by theme.js.
+  let bgColor = readBgColor();
+  let highlightRgb = readHighlightRgb();
+  function readBgColor() {
+    return (
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--bg-primary")
+        .trim() || "#050405"
+    );
+  }
+  function readHighlightRgb() {
+    // On dark: near-white "234, 229, 236"; on light: deep purple "60, 40, 90"
+    const isLight =
+      document.documentElement.getAttribute("data-theme") === "light";
+    return isLight ? "60, 40, 90" : "234, 229, 236";
+  }
+  window.addEventListener("themechange", () => {
+    bgColor = readBgColor();
+    highlightRgb = readHighlightRgb();
+  });
+
   function animate() {
     animationFrameId = requestAnimationFrame(animate);
-    // Match --bg-primary: #050405
-    ctx.fillStyle = "rgba(5, 4, 5, 1)";
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < particles.length; i++) {

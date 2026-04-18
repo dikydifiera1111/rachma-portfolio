@@ -37,6 +37,18 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style.css" />
+
+    <!-- Theme init (inline to avoid flash-of-wrong-theme) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("rachma-theme");
+          if (t === "light") {
+            document.documentElement.setAttribute("data-theme", "light");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <!-- ==================== INTRO OVERLAY ==================== -->
@@ -83,6 +95,41 @@
           <a href="#about" class="nav-link">ABOUT</a>
           <a href="#work" class="nav-link">WORK</a>
           <a href="#contact" class="nav-link">CONTACT</a>
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle color theme"
+            title="Toggle theme"
+          >
+            <svg
+              class="theme-icon theme-icon-moon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg
+              class="theme-icon theme-icon-sun"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>

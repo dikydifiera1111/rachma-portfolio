@@ -4,6 +4,7 @@
    ============================================ */
 
 import "./style.css";
+import { initTheme } from "./js/theme.js";
 import { initIntro } from "./js/intro.js";
 import { initSmoothScroll } from "./js/smooth-scroll.js";
 import { initNavigation } from "./js/navigation.js";
@@ -18,6 +19,7 @@ import { initPortfolio } from "./js/portfolio.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   initIntro();
   initSmoothScroll();
   initNavigation();
