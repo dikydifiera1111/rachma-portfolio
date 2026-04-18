@@ -927,6 +927,8 @@ a.contact-value:hover {
   padding: 0.5rem 1rem;
   color: var(--text-secondary);
   text-decoration: none;
+  cursor: pointer;
+  text-decoration: none;
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 500;
@@ -1337,4 +1339,232 @@ a.contact-value:hover {
 /* Specific reset for the 3D local block */
 .social-3d-section .igloo-social-bar {
   z-index: auto;
+}
+
+/* ============================================
+   PORTFOLIO (SCROLL-MORPH) SECTION
+   ============================================ */
+.portfolio-section {
+  padding: var(--section-padding);
+  padding-bottom: 0;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* Tighten the gap between Portfolio and Social-3D sections */
+#portfolio + .social-3d-section,
+.portfolio-section + .social-3d-section {
+  margin-top: clamp(-40px, -4vh, -16px);
+  padding-top: 0;
+}
+
+.portfolio-stage {
+  --stage-color: #c8b6e2;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  margin-top: 2rem;
+  border-radius: 24px;
+  overflow: hidden;
+  background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--stage-color) 35%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--bg-primary);
+  transition: background 0.4s ease;
+  border: 1px solid rgba(180, 140, 222, 0.12);
+}
+
+.portfolio-intro,
+.portfolio-outro {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.portfolio-intro-title {
+  font-family: var(--font-heading, "Outfit", sans-serif);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.portfolio-intro-sub {
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--text-secondary);
+}
+
+.portfolio-outro {
+  opacity: 0;
+  top: 12%;
+  transform: translate(-50%, 0);
+}
+
+.portfolio-outro-title {
+  font-family: var(--font-heading, "Outfit", sans-serif);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.portfolio-outro-sub {
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-outro-cta {
+  pointer-events: auto;
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--text-primary);
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all var(--transition-fast, 0.3s ease);
+}
+
+.portfolio-outro-cta:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+  box-shadow: 0 0 32px var(--glow);
+}
+
+.portfolio-cards {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 3;
+}
+
+.portfolio-card {
+  position: absolute;
+  left: -45px;
+  top: -64px;
+  width: 90px;
+  height: 128px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  cursor: pointer;
+  will-change: transform;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.portfolio-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.portfolio-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio-card:hover .portfolio-card-inner {
+  transform: rotateY(180deg);
+}
+
+.portfolio-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.portfolio-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-card-back {
+  transform: rotateY(180deg);
+  background: var(--card-color, #111);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.portfolio-card-project {
+  font-family: var(--font-heading, "Outfit", sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.portfolio-card-view {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  opacity: 0.8;
+}
+
+.portfolio-caption {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  pointer-events: none;
+}
+
+.portfolio-caption-project {
+  font-family: var(--font-heading, "Outfit", sans-serif);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.portfolio-caption-desc {
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 768px) {
+  .portfolio-stage {
+    min-height: 500px;
+    height: 80vh;
+  }
+  .portfolio-card {
+    width: 64px;
+    height: 90px;
+    left: -32px;
+    top: -45px;
+  }
 }

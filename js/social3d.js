@@ -41,28 +41,55 @@ export function initSocial3D() {
   const positions = new Float32Array(particleCount * 3);
 
   const targets = {
-    blob: new Float32Array(particleCount * 3),
+    pinterestShape: new Float32Array(particleCount * 3),
     dribbbleShape: new Float32Array(particleCount * 3),
     box: new Float32Array(particleCount * 3),
   };
 
-  // Target 0: Blob
+  // Target 0: Pinterest "P" logomark — filled circle silhouette with a
+  // denser, cleanly carved "P" glyph on the front face (+Z). Reads as the
+  // Pinterest brand mark when viewed head-on.
+  const pinRadius = 3.5;
   for (let i = 0; i < particleCount; i++) {
     const i3 = i * 3;
-    const r1 = Math.random();
-    const radius = r1 < 0.25 ? 1.5 : r1 > 0.9 ? 1.0 : 2.5; // Head vs Body
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(Math.random() * 2 - 1);
+    const rType = Math.random();
+    let x, y, z;
 
-    let yOffset = 0;
-    if (r1 < 0.25) yOffset = 2.5;
-    else if (r1 > 0.9) yOffset = -2.5;
+    if (rType < 0.35) {
+      // Outer shell (the circular badge)
+      const u = Math.random();
+      const v = Math.random();
+      const theta = 2 * Math.PI * u;
+      const phi = Math.acos(2 * v - 1);
+      x = pinRadius * Math.sin(phi) * Math.cos(theta);
+      y = pinRadius * Math.cos(phi);
+      z = pinRadius * Math.sin(phi) * Math.sin(theta);
+    } else {
+      // Front-face "P" glyph — sits on +Z plane so users see it head-on.
+      // Glyph metrics (roughly centered at 0,0):
+      //   stem:  vertical bar on the left
+      //   bowl:  circle on the upper-right
+      const glyphType = Math.random();
+      const glyphZ = pinRadius * 0.95; // pulled to the front face
 
-    const noise = (Math.random() - 0.5) * 0.5;
+      if (glyphType < 0.4) {
+        // Vertical stem: x in [-1.1, -0.4], y in [-2.2, 1.6]
+        x = -1.1 + Math.random() * 0.7;
+        y = -2.2 + Math.random() * 3.8;
+      } else {
+        // Bowl of the P: ring centered at (0.2, 0.6) with r ~ 1.3, thickness 0.35
+        const a = Math.random() * Math.PI * 2;
+        const ringR = 1.15 + Math.random() * 0.35;
+        x = 0.2 + Math.cos(a) * ringR;
+        y = 0.6 + Math.sin(a) * ringR;
+      }
+      z = glyphZ + (Math.random() - 0.5) * 0.25;
+    }
 
-    targets.blob[i3 + 0] = radius * Math.sin(phi) * Math.cos(theta) + noise;
-    targets.blob[i3 + 1] = radius * Math.cos(phi) + yOffset + noise;
-    targets.blob[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta) + noise;
+    const noise = (Math.random() - 0.5) * 0.18;
+    targets.pinterestShape[i3 + 0] = x + noise;
+    targets.pinterestShape[i3 + 1] = y + noise;
+    targets.pinterestShape[i3 + 2] = z + noise;
   }
 
   // Target 1: Dribbble Shape (Basketball Sphere)
@@ -188,7 +215,7 @@ export function initSocial3D() {
   pivot.add(particles);
   scene.add(pivot);
 
-  const shapeKeys = ["blob", "dribbbleShape", "box"];
+  const shapeKeys = ["pinterestShape", "dribbbleShape", "box"];
 
   // --- Physics & Interaction State ---
   const basePositions = new Float32Array(particleCount * 3);
@@ -255,6 +282,20 @@ export function initSocial3D() {
       activeLink.insertBefore(corners, activeLink.firstChild);
     }
   }
+
+  // Label click: if inactive, switch shape (no navigation);
+  // if already active, allow the native link to navigate in a new tab.
+  links.forEach((link, idx) => {
+    link.addEventListener("click", (e) => {
+      if (idx !== currentIndex) {
+        e.preventDefault();
+        const prev = currentIndex;
+        currentIndex = idx;
+        updateUI(prev, currentIndex);
+        transitionTo(currentIndex);
+      }
+    });
+  });
 
   prevBtn.addEventListener("click", () => {
     if (currentIndex > 0) {
