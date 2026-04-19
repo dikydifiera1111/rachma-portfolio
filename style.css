@@ -879,6 +879,7 @@ p {
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, black 100%);
   mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, black 100%);
   pointer-events: none;
+  transition: background-color 0.4s ease;
 }
 
 .about-intro {

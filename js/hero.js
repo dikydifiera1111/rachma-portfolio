@@ -46,11 +46,12 @@ function initHeroTransition() {
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: var(--bg-color, #0f0f11);
+      background-color: var(--bg-primary, #050405);
       z-index: -1;
       border-top-left-radius: 40px;
       border-top-right-radius: 40px;
       box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
+      transition: background-color 0.4s ease;
     }
   `;
   const style = document.createElement("style");
