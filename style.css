@@ -844,17 +844,21 @@ p {
    ABOUT / EXPERIENCE TIMELINE
    ============================================ */
 .about-section {
-  padding: var(--section-padding) 0;
+  width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.about-content {
+  padding: var(--section-padding);
   max-width: var(--container-max);
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
-  /* Break out of container constraints to allow full-bleed background */
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  padding-left: calc(50vw - 50%);
-  padding-right: calc(50vw - 50%);
+  z-index: 2;
 }
 
 .about-boxes-canvas {

@@ -39,14 +39,12 @@ function initHeroTransition() {
   aboutSection.style.zIndex = "10";
 
   // Create a pseudo element to give .about-section a full-bleed background,
-  // since its CSS structure uses a 1200px max-width container natively.
   const pseudoCSS = `
     .about-section::before {
       content: "";
       position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
+      top: 0; left: 0;
+      width: 100%;
       height: 100%;
       background: var(--bg-color, #0f0f11);
       z-index: -1;
