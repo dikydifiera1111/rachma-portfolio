@@ -1625,9 +1625,9 @@ p {
   flex-direction: column;
   gap: 1rem;
   padding: 0.5rem 0;
-  /* Break out to the right edge exactly */
-  margin-right: -10vw; /* Reduced from 50vw offset to prevent hard scrolling */
-  padding-right: 10vw; 
+  /* Infinite right breakout */
+  margin-right: -100vw;
+  padding-right: 100vw; 
   width: auto;
   border-radius: 0;
 }
@@ -2752,8 +2752,9 @@ a.contact-value:hover {
 .portfolio-stage {
   --stage-color: #c8b6e2;
   position: relative;
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
   height: 100vh;
   min-height: 600px;
   margin-top: 2rem;
