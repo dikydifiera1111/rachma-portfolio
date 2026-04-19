@@ -3,6 +3,9 @@
    ============================================ */
 
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ROLES = ["DESIGNER", "CREATIVE", "PROBLEM SOLVER"];
 let currentRoleIndex = 0;
@@ -22,6 +25,57 @@ export function initHero() {
   startRoleSwitcher();
   // initPortraitTilt();
   initCursorTwinkles();
+  initHeroTransition();
+}
+
+function initHeroTransition() {
+  const heroSection = document.querySelector(".hero-section");
+  const aboutSection = document.querySelector(".about-section");
+
+  if (!heroSection || !aboutSection) return;
+
+  // Make sure aboutSection is positioned so it properly overlays the pinned hero
+  aboutSection.style.position = "relative";
+  aboutSection.style.zIndex = "10";
+
+  // Create a pseudo element to give .about-section a full-bleed background,
+  // since its CSS structure uses a 1200px max-width container natively.
+  const pseudoCSS = `
+    .about-section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100%;
+      background: var(--bg-color, #0f0f11);
+      z-index: -1;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
+    }
+  `;
+  const style = document.createElement("style");
+  style.innerHTML = pseudoCSS;
+  document.head.appendChild(style);
+
+  // Pin the hero section in place while the about section slides smoothly over the top,
+  // progressively blurring, dimming, and scaling down the hero behind it.
+  gsap.to(heroSection, {
+    scrollTrigger: {
+      trigger: heroSection,
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      pin: true,
+      pinSpacing: false, // Prevents adding padding underneath, allowing the about section to slide over immediately
+    },
+    transformOrigin: "center center",
+    scale: 0.85,
+    opacity: 0,
+    filter: "blur(12px)",
+    ease: "power2.inOut",
+  });
 }
 
 // Wrap each character of name lines in <span class="letter"> so the
