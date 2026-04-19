@@ -1797,9 +1797,12 @@ p {
   .skills-hero-left { padding-right: 0; }
   .skills-hero-right {
     /* Full-screen breakout on mobile */
-    margin-left: calc(50% - 50%);
-    margin-right: calc(50% - 50%);
-    width: 100%;
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding-right: 0;
   }
   .tool-card { width: 8rem; height: 8rem; }
   .tool-card img { width: 2.2rem; height: 2.2rem; }
