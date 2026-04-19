@@ -64,14 +64,55 @@ export function initFishSequence() {
   const canvas = document.getElementById("hero-canvas");
   if (!canvas) return;
 
+  const wrapper = document.querySelector(".hero-scroll-wrapper");
   const bar = document.querySelector(".hero-preload-bar");
   const barFill = document.querySelector(".hero-preload-bar__fill");
+  const hint = document.querySelector(".hero-scroll-hint");
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
   const urls = buildFrameUrls();
   const frames = new Array(urls.length);
   let { ctx, w, h } = sizeCanvas(canvas);
   let firstDrawn = false;
   let loadedCount = 0;
+  let lastFrameIndex = -1;
+  let rafId = null;
+
+  function currentProgress() {
+    if (!wrapper) return 0;
+    const rect = wrapper.getBoundingClientRect();
+    const scrollable = rect.height - window.innerHeight;
+    if (scrollable <= 0) return 0;
+    const scrolled = -rect.top;
+    return Math.max(0, Math.min(1, scrolled / scrollable));
+  }
+
+  function render() {
+    rafId = null;
+    const progress = currentProgress();
+    const index = prefersReducedMotion
+      ? frames.length - 1
+      : Math.round(progress * (frames.length - 1));
+    const img = frames[index];
+    if (img && index !== lastFrameIndex) {
+      drawCover(ctx, img, w, h);
+      lastFrameIndex = index;
+    } else if (img && !firstDrawn) {
+      drawCover(ctx, img, w, h);
+      firstDrawn = true;
+      lastFrameIndex = index;
+    }
+    if (hint) {
+      hint.classList.toggle("is-hidden", progress > 0.05);
+    }
+  }
+
+  function scheduleRender() {
+    if (rafId == null) rafId = requestAnimationFrame(render);
+  }
 
   urls.forEach((url, i) => {
     loadImage(url)
@@ -85,6 +126,7 @@ export function initFishSequence() {
           drawCover(ctx, img, w, h);
           firstDrawn = true;
         }
+        scheduleRender();
         if (loadedCount === urls.length && bar) {
           bar.classList.add("is-done");
         }
@@ -94,7 +136,10 @@ export function initFishSequence() {
       });
   });
 
-  // Redraw current first frame on resize so the hero is never blank.
+  if (!prefersReducedMotion) {
+    window.addEventListener("scroll", scheduleRender, { passive: true });
+  }
+
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
@@ -103,8 +148,8 @@ export function initFishSequence() {
       ctx = sized.ctx;
       w = sized.w;
       h = sized.h;
-      const firstAvailable = frames.find(Boolean);
-      if (firstAvailable) drawCover(ctx, firstAvailable, w, h);
+      lastFrameIndex = -1;
+      scheduleRender();
     }, 150);
   });
 }
