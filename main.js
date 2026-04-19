@@ -4,7 +4,11 @@
    ============================================ */
 
 import "./style.css";
-import { StringTune, StringMagnetic, StringLazy } from "@fiddle-digital/string-tune";
+import {
+  StringTune,
+  StringMagnetic,
+  StringLazy,
+} from "@fiddle-digital/string-tune";
 import { initTheme } from "./js/theme.js";
 import { initIntro } from "./js/intro.js";
 import { initSmoothScroll } from "./js/smooth-scroll.js";

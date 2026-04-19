@@ -17,11 +17,7 @@ export function initHero() {
     // We remove the GSAP animation for the wrapper entirely to ensure it doesn't conflict with Magnetic!
     .from(".hero-creative-label", { opacity: 0, x: 20, duration: 0.6 }, "-=0.4")
     .from(".hero-role-switcher", { opacity: 0, x: 20, duration: 0.6 }, "-=0.3")
-    .from(
-      ".hero-scroll-hint",
-      { opacity: 0, y: 10, duration: 0.6 },
-      "-=0.2",
-    );
+    .from(".hero-scroll-hint", { opacity: 0, y: 6, duration: 0.6 }, "-=0.1");
 
   startRoleSwitcher();
   // initPortraitTilt();
@@ -47,7 +43,9 @@ function splitNameLetters() {
 // Cursor-reactive tilt on the portrait — tracks mouse position inside a
 // generous radius around the photo, returns to rest on leave.
 function initPortraitTilt() {
-  const wrapper = document.querySelector(".hero-photo-wrapper[string=\"magnetic\"]");
+  const wrapper = document.querySelector(
+    '.hero-photo-wrapper[string="magnetic"]',
+  );
   if (!wrapper) return;
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
