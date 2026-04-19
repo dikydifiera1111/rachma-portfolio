@@ -6,8 +6,9 @@
 
 // Sample every 4th frame from 1..237 → 60 frames.
 // Source PNGs live in assets/fish-frames/ (gitignored, ~142MB).
-// Web-optimized WebPs (~2.3MB total) are committed under assets/fish-frames-web/
-// with names frame-001.webp, frame-005.webp, ..., frame-237.webp.
+// Web-optimized WebPs (~2.3MB total) live in public/assets/fish-frames-web/
+// (served at /assets/fish-frames-web/ by Vite) with names
+// frame-001.webp, frame-005.webp, ..., frame-237.webp.
 const FRAME_STEP = 4;
 const FRAME_START = 1;
 const FRAME_END = 237;
