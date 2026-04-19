@@ -138,8 +138,14 @@
     </nav>
 
     <!-- ==================== HERO SECTION ==================== -->
+    <div class="hero-scroll-wrapper">
     <section id="hero" class="hero-section">
       <canvas id="hero-canvas" class="hero-canvas"></canvas>
+
+      <!-- Fish sequence preload progress bar -->
+      <div class="hero-preload-bar" aria-hidden="true">
+        <div class="hero-preload-bar__fill"></div>
+      </div>
 
       <!-- Cursor-reactive twinkle layer -->
       <div class="hero-twinkles" aria-hidden="true"></div>
@@ -217,17 +223,13 @@
         </div>
       </div>
 
-      <!-- Scroll hint toward the robot -->
-      <a href="#about" class="hero-scroll-hint" aria-label="Meet my little friend below">
-        <span class="hero-scroll-hint__label">meet my little friend</span>
-        <span class="hero-scroll-hint__chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </span>
-      </a>
-
       <!-- Floating orb -->
       <div class="floating-orb"></div>
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll-hint" aria-hidden="true">scroll to explore ↓</div>
     </section>
+    </div>
 
     <!-- ==================== ABOUT / EXPERIENCE TIMELINE ==================== -->
     <section id="about" class="about-section">
