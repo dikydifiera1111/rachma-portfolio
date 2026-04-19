@@ -49,7 +49,10 @@ function drawCover(ctx, img, canvasW, canvasH) {
 }
 
 function sizeCanvas(canvas) {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Cap DPR at 1 — this canvas is an ambient background scrubbed on scroll.
+  // Drawing at native DPR doubles pixel work for a negligible visual gain
+  // on a soft-edged WebP sequence, and hurts scroll-scrub smoothness.
+  const dpr = 1;
   const rect = canvas.getBoundingClientRect();
   const w = Math.max(1, Math.floor(rect.width));
   const h = Math.max(1, Math.floor(rect.height));

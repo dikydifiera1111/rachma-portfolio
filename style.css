@@ -699,8 +699,25 @@ p {
   height: 100%;
   z-index: 0;
   background: transparent;
-  filter: drop-shadow(0 0 40px rgba(180, 140, 222, 0.45));
   pointer-events: none;
+}
+
+/* Static purple glow layered over the fish canvas — cheaper than a
+   per-frame drop-shadow filter that forces the full canvas to repaint
+   on every scroll frame. Sits above the canvas (z-index 1) and below
+   the hero content (z-index 2). */
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 40% 55%,
+    rgba(180, 140, 222, 0.22) 0%,
+    rgba(180, 140, 222, 0.08) 35%,
+    transparent 65%
+  );
 }
 
 .hero-preload-bar {
