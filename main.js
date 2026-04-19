@@ -4,6 +4,7 @@
    ============================================ */
 
 import "./style.css";
+import { StringTune, StringMagnetic, StringLazy } from "@fiddle-digital/string-tune";
 import { initTheme } from "./js/theme.js";
 import { initIntro } from "./js/intro.js";
 import { initSmoothScroll } from "./js/smooth-scroll.js";
@@ -24,6 +25,12 @@ import { initCursor } from "./js/cursor.js";
 
 // Initialize everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
+  const stringTune = StringTune.getInstance();
+  window.StringTuneContext = stringTune;
+  stringTune.use(StringLazy);
+  stringTune.use(StringMagnetic);
+  stringTune.start(0);
+
   initTheme();
   initIntro();
   initSmoothScroll();
