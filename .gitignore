@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Source fish frames (heavy PNGs); web-optimized WebPs are committed under assets/fish-frames-web
+assets/fish-frames/
+data/3d/Cyber_Fish.jpeg
