@@ -35,7 +35,13 @@ export function initTimeline() {
       trigger: entry,
       start: "top 60%",
       end: "bottom 40%",
-      toggleClass: { targets: entry, className: "is-lit" },
+      onEnter: () => {
+        entry.classList.add("is-lit");
+        createFirework(entry.querySelector(".timeline-dot"));
+      },
+      onLeaveBack: () => {
+        entry.classList.remove("is-lit");
+      },
     });
   });
 
@@ -51,6 +57,50 @@ export function initTimeline() {
       },
       scaleY: 0,
       transformOrigin: "top center",
+    });
+  }
+}
+
+function createFirework(dot) {
+  if (!dot) return;
+  const numParticles = 12;
+  const color = "var(--accent)"; // Purple spark
+  
+  for (let i = 0; i < numParticles; i++) {
+    const particle = document.createElement("div");
+    particle.className = "timeline-spark";
+    dot.appendChild(particle);
+
+    // Initial state: centered on the dot perfectly
+    gsap.set(particle, {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      width: "4px",
+      height: "4px",
+      backgroundColor: color,
+      borderRadius: "50%",
+      xPercent: -50,
+      yPercent: -50,
+      pointerEvents: "none",
+      boxShadow: "0 0 10px var(--accent), 0 0 20px var(--glow)",
+      zIndex: -1, // Keep behind the dot
+    });
+
+    // Randomize explosion trajectory
+    const angle = (Math.PI * 2 * i) / numParticles + (Math.random() - 0.5) * 0.5;
+    const distance = 25 + Math.random() * 25; 
+    
+    gsap.to(particle, {
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance,
+      opacity: 0,
+      scale: 0.5 + Math.random() * 1.5,
+      duration: 0.6 + Math.random() * 0.4,
+      ease: "power3.out",
+      onComplete: () => {
+        particle.remove();
+      }
     });
   }
 }
