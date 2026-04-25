@@ -33,6 +33,14 @@ export function initBird() {
   const scene = new THREE.Scene();
   // No scene.background — transparent
 
+  // --- Renderer ---
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearAlpha(0);
+
+  const canvas = renderer.domElement;
+
   // --- Spline loader ---
   const loader = new SplineLoader();
   loader.load(
@@ -40,17 +48,12 @@ export function initBird() {
     (splineScene) => {
       scene.add(splineScene);
     },
+    undefined,
+    () => {
+      renderer.setAnimationLoop(null);
+      canvas.remove();
+    },
   );
-
-  // --- Renderer ---
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
-  renderer.setClearAlpha(0);
-
-  const canvas = renderer.domElement;
   canvas.style.position = "fixed";
   canvas.style.top = "0";
   canvas.style.left = "0";
@@ -64,9 +67,10 @@ export function initBird() {
   let heroHeight = getHeroHeight();
   let scrollProgress = 0;
 
-  window.addEventListener("scroll", () => {
+  function onScroll() {
     scrollProgress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
-  }, { passive: true });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
 
   // --- Lerp state (initialised to start values) ---
   let curX = CONFIG.START_VIEWPORT_X;
@@ -74,12 +78,14 @@ export function initBird() {
   let curZ = CONFIG.START_Z;
 
   // --- Resize ---
-  window.addEventListener("resize", () => {
+  function onResize() {
     heroHeight = getHeroHeight();
+    scrollProgress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  }
+  window.addEventListener("resize", onResize);
 
   // --- Animation loop ---
   renderer.setAnimationLoop(() => {
@@ -113,6 +119,16 @@ export function initBird() {
 
     renderer.render(scene, camera);
   });
+
+  return {
+    destroy() {
+      renderer.setAnimationLoop(null);
+      renderer.dispose();
+      canvas.remove();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    },
+  };
 }
 
 function getHeroHeight() {
