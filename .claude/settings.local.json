@@ -22,7 +22,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(gh auth:*)",
-      "WebFetch(domain:www.linkedin.com)"
+      "WebFetch(domain:www.linkedin.com)",
+      "Bash(npm show *)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode\" --max-time 10)"
     ]
   },
   "enabledPlugins": {
