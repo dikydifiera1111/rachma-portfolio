@@ -1,17 +1,22 @@
-import * as THREE from "three";
-import SplineLoader from "@splinetool/loader";
+import "@splinetool/viewer";
 
 const CONFIG = {
-  START_VIEWPORT_X:  0.38,
-  START_VIEWPORT_Y:  0.75,
-  START_Z:           800,
+  // Starting position (scroll = 0): small, top-right
+  // translateX/Y are in vw/vh units relative to the element's center
+  START_X:     35,    // vw from center → positive = right
+  START_Y:    -30,    // vh from center → negative = up
+  START_SCALE: 0.18,
 
-  END_VIEWPORT_X:   -0.55,
-  END_VIEWPORT_Y:  -0.70,
-  END_Z:            323.53,
+  // Ending position (scroll = heroHeight): larger, bottom-left
+  END_X:      -38,    // vw from center → negative = left
+  END_Y:       32,    // vh from center → positive = down
+  END_SCALE:   0.65,
 
-  FADE_START:        0.80,
-  LERP_FACTOR:       0.08,
+  // Fade-out starts at this scroll progress (0–1)
+  FADE_START:  0.80,
+
+  // Lerp smoothing per frame (0 = frozen, 1 = instant snap)
+  LERP_FACTOR: 0.08,
 };
 
 function lerp(a, b, t) {
@@ -19,49 +24,25 @@ function lerp(a, b, t) {
 }
 
 export function initBird() {
-  // --- Camera ---
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    70,
-    100000,
-  );
-  camera.position.set(0, 0, CONFIG.START_Z);
-  camera.quaternion.setFromEuler(new THREE.Euler(0, 0, 0));
+  // Create the spline-viewer web component
+  const viewer = document.createElement("spline-viewer");
+  viewer.setAttribute("url", "https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode");
+  viewer.setAttribute("loading-anim-type", "none");
 
-  // --- Scene ---
-  const scene = new THREE.Scene();
-  // No scene.background — transparent
+  // Fixed overlay, pointer-events none so it never blocks page interaction
+  Object.assign(viewer.style, {
+    position:      "fixed",
+    top:           "0",
+    left:          "0",
+    width:         "100vw",
+    height:        "100vh",
+    zIndex:        "2",
+    pointerEvents: "none",
+    background:    "transparent",
+    transformOrigin: "center center",
+  });
 
-  // --- Renderer ---
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearAlpha(0);
-
-  const canvas = renderer.domElement;
-
-  // --- Spline loader ---
-  const loader = new SplineLoader();
-  loader.load(
-    "https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode",
-    (splineScene) => {
-      scene.add(splineScene);
-    },
-    undefined,
-    () => {
-      renderer.setAnimationLoop(null);
-      canvas.remove();
-    },
-  );
-  canvas.style.position = "fixed";
-  canvas.style.top = "0";
-  canvas.style.left = "0";
-  canvas.style.width = "100vw";
-  canvas.style.height = "100vh";
-  canvas.style.zIndex = "2";
-  canvas.style.pointerEvents = "none";
-  document.body.appendChild(canvas);
+  document.body.appendChild(viewer);
 
   // --- Scroll state ---
   let heroHeight = getHeroHeight();
@@ -72,59 +53,49 @@ export function initBird() {
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // --- Lerp state (initialised to start values) ---
-  let curX = CONFIG.START_VIEWPORT_X;
-  let curY = CONFIG.START_VIEWPORT_Y;
-  let curZ = CONFIG.START_Z;
-
   // --- Resize ---
   function onResize() {
     heroHeight = getHeroHeight();
     scrollProgress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
   }
   window.addEventListener("resize", onResize);
 
-  // --- Animation loop ---
-  renderer.setAnimationLoop(() => {
+  // --- Lerp state, initialised to start values ---
+  let curX     = CONFIG.START_X;
+  let curY     = CONFIG.START_Y;
+  let curScale = CONFIG.START_SCALE;
+  let curOpacity = 1;
+
+  let rafId;
+
+  function animate() {
     const p = scrollProgress;
 
-    const targetX = lerp(CONFIG.START_VIEWPORT_X, CONFIG.END_VIEWPORT_X, p);
-    const targetY = lerp(CONFIG.START_VIEWPORT_Y, CONFIG.END_VIEWPORT_Y, p);
-    const targetZ = lerp(CONFIG.START_Z,          CONFIG.END_Z,          p);
+    const targetX     = lerp(CONFIG.START_X,     CONFIG.END_X,     p);
+    const targetY     = lerp(CONFIG.START_Y,      CONFIG.END_Y,     p);
+    const targetScale = lerp(CONFIG.START_SCALE,  CONFIG.END_SCALE, p);
 
-    curX = lerp(curX, targetX, CONFIG.LERP_FACTOR);
-    curY = lerp(curY, targetY, CONFIG.LERP_FACTOR);
-    curZ = lerp(curZ, targetZ, CONFIG.LERP_FACTOR);
+    curX     = lerp(curX,     targetX,     CONFIG.LERP_FACTOR);
+    curY     = lerp(curY,     targetY,     CONFIG.LERP_FACTOR);
+    curScale = lerp(curScale, targetScale, CONFIG.LERP_FACTOR);
 
-    // Viewport-fraction → world-unit camera positioning
-    const fovRad = camera.fov * (Math.PI / 180);
-    const visH = 2 * Math.tan(fovRad / 2) * curZ;
-    const visW = visH * camera.aspect;
+    const targetOpacity = p >= CONFIG.FADE_START
+      ? 1 - (p - CONFIG.FADE_START) / (1 - CONFIG.FADE_START)
+      : 1;
+    curOpacity = lerp(curOpacity, targetOpacity, CONFIG.LERP_FACTOR);
 
-    camera.position.x = -curX * (visW / 2);
-    camera.position.y =  curY * (visH / 2);
-    camera.position.z =  curZ;
+    viewer.style.transform = `translate(${curX}vw, ${curY}vh) scale(${curScale})`;
+    viewer.style.opacity   = String(Math.max(0, curOpacity));
 
-    // Fade out over last (1 - FADE_START) of scroll range
-    if (p >= CONFIG.FADE_START) {
-      canvas.style.opacity = String(
-        1 - (p - CONFIG.FADE_START) / (1 - CONFIG.FADE_START)
-      );
-    } else {
-      canvas.style.opacity = "1";
-    }
+    rafId = requestAnimationFrame(animate);
+  }
 
-    renderer.render(scene, camera);
-  });
+  rafId = requestAnimationFrame(animate);
 
   return {
     destroy() {
-      renderer.setAnimationLoop(null);
-      renderer.dispose();
-      canvas.remove();
+      cancelAnimationFrame(rafId);
+      viewer.remove();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     },
