@@ -95,12 +95,75 @@ export function initPortfolio() {
   gsap.set(cards, { opacity: 0, y: 40, scale: 0.95, filter: "blur(8px)" });
 
   let activeIndex = SPOTLIGHT_INITIAL;
-  const dots = buildDots(TOTAL, dotsRoot, (i) => {
+  const dots = buildDots(TOTAL, dotsRoot, (i) => selectIndex(i, true));
+
+  const ROTATION_MS = 4500;
+  const MANUAL_LOCK_MS = 8000;
+
+  const prefersReducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const supportsHover = window.matchMedia("(hover: hover)").matches;
+
+  let rotationTimer = null;
+  let manualLockUntil = 0;
+  let inViewport = false;
+  let hovering = false;
+
+  function shouldAutoRotate() {
+    if (prefersReducedMotion) return false;
+    if (!inViewport) return false;
+    if (hovering) return false;
+    if (Date.now() < manualLockUntil) return false;
+    return true;
+  }
+
+  function scheduleNext() {
+    clearTimeout(rotationTimer);
+    if (!shouldAutoRotate()) return;
+    rotationTimer = setTimeout(() => {
+      activeIndex = (activeIndex + 1) % TOTAL;
+      applySpotlight(cards, dots, stage, activeIndex);
+      scheduleNext();
+    }, ROTATION_MS);
+  }
+
+  function selectIndex(i, manual) {
+    if (i === activeIndex) return;
     activeIndex = i;
     applySpotlight(cards, dots, stage, activeIndex);
-  });
+    if (manual) {
+      manualLockUntil = Date.now() + MANUAL_LOCK_MS;
+    }
+    scheduleNext();
+  }
 
   const marquee = stage.querySelector(".portfolio-marquee");
+
+  cards.forEach((el, i) => {
+    el.addEventListener("click", (e) => {
+      if (i !== activeIndex) {
+        e.preventDefault();
+        selectIndex(i, true);
+      }
+    });
+  });
+
+  if (supportsHover) {
+    cards.forEach((el, i) => {
+      el.addEventListener("mouseenter", () => {
+        hovering = true;
+        cards.forEach((c, j) => {
+          c.classList.toggle("is-dim", j !== i);
+        });
+        clearTimeout(rotationTimer);
+      });
+      el.addEventListener("mouseleave", () => {
+        hovering = false;
+        cards.forEach((c) => c.classList.remove("is-dim"));
+        scheduleNext();
+      });
+    });
+  }
 
   function runEntryAnimation() {
     cards.forEach((el, i) => {
@@ -118,15 +181,27 @@ export function initPortfolio() {
     if (marquee) {
       setTimeout(() => marquee.classList.add("is-ready"), 200);
     }
-    setTimeout(() => applySpotlight(cards, dots, stage, activeIndex), 900);
+    setTimeout(() => {
+      applySpotlight(cards, dots, stage, activeIndex);
+      scheduleNext();
+    }, 900);
   }
 
   // Trigger entry once when the section is in view
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+      inViewport = entry.isIntersecting;
+      if (inViewport && entry.intersectionRatio >= 0.2) {
         runEntryAnimation();
-        io.disconnect();
+        io.unobserve(stage);
+        const presenceIo = new IntersectionObserver((es) => {
+          es.forEach((e) => {
+            inViewport = e.isIntersecting;
+            if (inViewport) scheduleNext();
+            else clearTimeout(rotationTimer);
+          });
+        }, { threshold: 0.1 });
+        presenceIo.observe(stage);
       }
     });
   }, { threshold: 0.2 });
