@@ -73,15 +73,17 @@ function buildDots(total, dotsRoot, onSelect) {
 
 function applySpotlight(cards, dots, stage, activeIndex) {
   cards.forEach((el, i) => {
-    el.classList.toggle("is-spotlight", i === activeIndex);
-    el.setAttribute("aria-current", i === activeIndex ? "true" : "false");
+    const active = i === activeIndex;
+    el.classList.toggle("is-spotlight", active);
+    if (active) el.setAttribute("aria-current", "true");
+    else el.removeAttribute("aria-current");
   });
   dots.forEach((el, i) => {
     el.classList.toggle("is-active", i === activeIndex);
     el.setAttribute("aria-selected", i === activeIndex ? "true" : "false");
   });
-  // The stage's background `transition: background 0.7s ease` (set in CSS)
-  // handles the visual crossfade — we just need to set the new color.
+  // The stage's background transition (set in CSS) handles the visual
+  // crossfade — `--stage-color` is registered via @property so it interpolates.
   stage.style.setProperty("--stage-color", PROJECTS[activeIndex].color);
 }
 
@@ -97,12 +99,17 @@ export function initPortfolio() {
   let activeIndex = SPOTLIGHT_INITIAL;
   const dots = buildDots(TOTAL, dotsRoot, (i) => selectIndex(i, true));
 
-  const ROTATION_MS = 4500;
-  const MANUAL_LOCK_MS = 8000;
+  // Apply spotlight before entry animation so the first card lands at its
+  // correct (larger) spotlight size — avoids a visible resize at 900ms.
+  applySpotlight(cards, dots, stage, activeIndex);
 
   const prefersReducedMotion =
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const supportsHover = window.matchMedia("(hover: hover)").matches;
+  const isCompact = window.matchMedia("(max-width: 768px)").matches;
+
+  const ROTATION_MS = isCompact ? 5500 : 4500;
+  const MANUAL_LOCK_MS = 8000;
 
   let rotationTimer = null;
   let manualLockUntil = 0;

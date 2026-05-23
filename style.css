@@ -2750,6 +2750,12 @@ a.contact-value:hover {
 /* ============================================
    PORTFOLIO (LIQUID GLASS + KINETIC SPOTLIGHT)
    ============================================ */
+@property --stage-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #c8b6e2;
+}
+
 .portfolio-section {
   padding: var(--section-padding);
   padding-bottom: 0;
