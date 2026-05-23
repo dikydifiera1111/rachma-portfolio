@@ -1,0 +1,47 @@
+<h2>Layout dasar — bagaimana cards-nya disusun?</h2>
+<p class="subtitle">Mekanisme saat ini: cards melingkar di tengah → morph jadi arc kipas. Mau lanjut konsep itu (lebih dipoles) atau ganti total?</p>
+
+<div class="cards">
+  <div class="card" data-choice="liquid-stack" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:radial-gradient(circle at 50% 40%,#b48cde30,transparent 60%),#0a0a0f;height:200px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);width:90px;height:130px;background:linear-gradient(135deg,#C8B6E2dd,#C8B6E288);border:1px solid #fff3;border-radius:14px;backdrop-filter:blur(8px);box-shadow:0 20px 60px #b48cde40,inset 0 0 0 1px #fff2"></div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-30%,-50%) rotate(4deg);width:90px;height:130px;background:linear-gradient(135deg,#2F6A6Add,#2F6A6A88);border:1px solid #fff3;border-radius:14px;box-shadow:0 20px 60px #2F6A6A40"></div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-70%,-50%) rotate(12deg);width:90px;height:130px;background:linear-gradient(135deg,#F7D417dd,#F7D41788);border:1px solid #fff3;border-radius:14px;box-shadow:0 20px 60px #F7D41740"></div>
+      <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:9px;color:#8a8490;letter-spacing:0.4em">DRAG · SWIPE · SCROLL</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Liquid Stack (Tinder-style)</h3>
+      <p>Cards bertumpuk di tengah seperti deck. Scroll → card teratas melayang keluar, yang di belakang naik. Setiap card adalah glass surface penuh dengan project preview. Marquee text "WORK · CASE STUDIES · 2025" jalan di latar.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="floating-grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0f;height:200px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:15px;left:20px;width:80px;height:110px;background:linear-gradient(135deg,#C8B6E2cc,#C8B6E266);border:1px solid #fff3;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 10px 30px #b48cde40"></div>
+      <div style="position:absolute;top:30px;left:115px;width:80px;height:110px;background:linear-gradient(135deg,#2F6A6Acc,#2F6A6A66);border:1px solid #fff3;border-radius:12px;box-shadow:0 10px 30px #2F6A6A40"></div>
+      <div style="position:absolute;top:10px;left:210px;width:80px;height:110px;background:linear-gradient(135deg,#0B2A5Bcc,#0B2A5B66);border:1px solid #fff3;border-radius:12px;box-shadow:0 10px 30px #0B2A5B40"></div>
+      <div style="position:absolute;top:35px;left:305px;width:80px;height:110px;background:linear-gradient(135deg,#F7D417cc,#F7D41766);border:1px solid #fff3;border-radius:12px;box-shadow:0 10px 30px #F7D41740"></div>
+      <div style="position:absolute;bottom:14px;left:20px;font-family:'Outfit';font-weight:900;font-size:14px;color:#fff;letter-spacing:-0.04em">04 PROJECTS / ONE JOURNEY</div>
+    </div>
+    <div class="card-body">
+      <h3>B — Floating Horizontal Stack</h3>
+      <p>4 cards mengambang horizontal (1 per proyek), masing-masing glass dengan warna brand-nya. Cards bergerak parallax saat scroll, magnetic hover lift. Marquee/kinetic text di bawah sebagai "anchor" Gen Z.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="evolve-circle" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:radial-gradient(circle at 50% 50%,#b48cde20,transparent 60%),#0a0a0f;height:200px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;border:1px dashed #fff2;border-radius:50%"></div>
+      <div style="position:absolute;top:18%;left:50%;transform:translate(-50%,0) rotate(0deg);width:50px;height:70px;background:linear-gradient(135deg,#C8B6E2dd,#C8B6E266);border:1px solid #fff3;border-radius:10px;backdrop-filter:blur(6px);box-shadow:0 0 30px #b48cde60"></div>
+      <div style="position:absolute;top:50%;right:20%;transform:translate(0,-50%) rotate(90deg);width:50px;height:70px;background:linear-gradient(135deg,#2F6A6Add,#2F6A6A66);border:1px solid #fff3;border-radius:10px;box-shadow:0 0 30px #2F6A6A60"></div>
+      <div style="position:absolute;bottom:18%;left:50%;transform:translate(-50%,0) rotate(180deg);width:50px;height:70px;background:linear-gradient(135deg,#0B2A5Bdd,#0B2A5B66);border:1px solid #fff3;border-radius:10px;box-shadow:0 0 30px #0B2A5B60"></div>
+      <div style="position:absolute;top:50%;left:20%;transform:translate(0,-50%) rotate(270deg);width:50px;height:70px;background:linear-gradient(135deg,#F7D417dd,#F7D41766);border:1px solid #fff3;border-radius:10px;box-shadow:0 0 30px #F7D41760"></div>
+    </div>
+    <div class="card-body">
+      <h3>C — Polish the Current (Circle → Arc, but liquid)</h3>
+      <p>Pertahankan konsep saat ini (melingkar lalu morph), tapi tiap card jadi liquid glass dengan glow per warna brand. Kinetic marquee jalan di belakang lingkaran. Cleaner, less cluttered, motion lebih smooth dengan magnetic snap.</p>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:24px">Untuk vibe Gen Z + liquid glass + trending, opsi B atau A biasanya lebih punchy. Tapi C mempertahankan signature project ini. Mana yang paling nyangkut?</p>

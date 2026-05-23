@@ -26,7 +26,21 @@
       "Bash(npm show *)",
       "Bash(npm run *)",
       "Read(//tmp/**)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode\" --max-time 10)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode\" --max-time 10)",
+      "Bash(rtk ls *)",
+      "Bash(rtk read *)",
+      "Bash(rtk git *)",
+      "Bash(rtk grep *)",
+      "Bash(/Users/diky/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/start-server.sh --project-dir /Users/diky/Documents/landing-page-try)",
+      "mcp__plugin_context-mode_context-mode__ctx_batch_execute",
+      "mcp__plugin_context-mode_context-mode__ctx_search",
+      "Bash(node -e ' *)",
+      "Bash(rtk npm *)",
+      "Bash(rtk wc *)",
+      "Bash(rtk curl *)",
+      "mcp__plugin_context-mode_context-mode__ctx_execute",
+      "Bash(sed -n '94,100p' /Users/diky/Documents/landing-page-try/js/portfolio.js)",
+      "Bash(sed -n '269,290p' /Users/diky/Documents/landing-page-try/js/portfolio.js)"
     ]
   },
   "enabledPlugins": {
