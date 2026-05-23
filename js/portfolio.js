@@ -154,19 +154,83 @@ export function initPortfolio() {
     });
   });
 
-  if (supportsHover) {
+  if (supportsHover && !prefersReducedMotion) {
+    cards.forEach((el, i) => {
+      let raf = null;
+      const onMove = (e) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const r = el.getBoundingClientRect();
+          const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+          const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+          gsap.to(el, {
+            duration: 0.4,
+            ease: "power2.out",
+            rotationX: -ny * 4,
+            rotationY: nx * 4,
+            y: -8,
+            transformPerspective: 800,
+          });
+          raf = null;
+        });
+      };
+      const reset = () => {
+        gsap.to(el, {
+          duration: 0.5,
+          ease: "power2.out",
+          rotationX: 0,
+          rotationY: 0,
+          y: el.classList.contains("is-spotlight") ? 0 : 8,
+        });
+      };
+      el.addEventListener("mouseenter", () => {
+        hovering = true;
+        cards.forEach((c, j) => c.classList.toggle("is-dim", j !== i));
+        clearTimeout(rotationTimer);
+        el.addEventListener("mousemove", onMove);
+      });
+      el.addEventListener("mouseleave", () => {
+        hovering = false;
+        cards.forEach((c) => c.classList.remove("is-dim"));
+        el.removeEventListener("mousemove", onMove);
+        reset();
+        scheduleNext();
+      });
+    });
+  } else if (supportsHover) {
+    // Reduced motion: keep dim-on-hover and pause behavior, no tilt
     cards.forEach((el, i) => {
       el.addEventListener("mouseenter", () => {
         hovering = true;
-        cards.forEach((c, j) => {
-          c.classList.toggle("is-dim", j !== i);
-        });
+        cards.forEach((c, j) => c.classList.toggle("is-dim", j !== i));
         clearTimeout(rotationTimer);
       });
       el.addEventListener("mouseleave", () => {
         hovering = false;
         cards.forEach((c) => c.classList.remove("is-dim"));
         scheduleNext();
+      });
+    });
+  }
+
+  if (!prefersReducedMotion) {
+    let parallaxRaf = null;
+    stage.addEventListener("mousemove", (e) => {
+      if (parallaxRaf) return;
+      parallaxRaf = requestAnimationFrame(() => {
+        const r = stage.getBoundingClientRect();
+        const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+        cards.forEach((el) => {
+          // Skip if currently being hover-tilted (mouse is over that card)
+          if (el.matches(":hover")) return;
+          const depth = el.classList.contains("is-spotlight") ? 6 : 4;
+          gsap.to(el, {
+            duration: 0.6,
+            ease: "power2.out",
+            x: nx * depth,
+          });
+        });
+        parallaxRaf = null;
       });
     });
   }

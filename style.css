@@ -3034,6 +3034,45 @@ a.contact-value:hover {
   filter: blur(8px);
 }
 
+/* Breathing glow — subtle pulse, offset per card */
+@keyframes portfolio-breathe {
+  0%, 100% { box-shadow:
+      var(--portfolio-shadow-base),
+      var(--portfolio-card-highlight),
+      0 30px 60px color-mix(in srgb, var(--card-color) 30%, transparent);
+  }
+  50% { box-shadow:
+      var(--portfolio-shadow-base),
+      var(--portfolio-card-highlight),
+      0 30px 75px color-mix(in srgb, var(--card-color) 38%, transparent);
+  }
+}
+
+@keyframes portfolio-breathe-spotlight {
+  0%, 100% { box-shadow:
+      0 40px 90px color-mix(in srgb, var(--card-color) 50%, transparent),
+      0 0 60px color-mix(in srgb, var(--accent) 35%, transparent),
+      var(--portfolio-card-highlight);
+  }
+  50% { box-shadow:
+      0 40px 100px color-mix(in srgb, var(--card-color) 60%, transparent),
+      0 0 80px color-mix(in srgb, var(--accent) 45%, transparent),
+      var(--portfolio-card-highlight);
+  }
+}
+
+.portfolio-card:not(.is-entering):not(:hover) {
+  animation: portfolio-breathe 4s ease-in-out infinite;
+}
+
+.portfolio-card.is-spotlight:not(.is-entering):not(:hover) {
+  animation: portfolio-breathe-spotlight 4s ease-in-out infinite;
+}
+
+.portfolio-card[data-index="1"] { animation-delay: -1s; }
+.portfolio-card[data-index="2"] { animation-delay: -2s; }
+.portfolio-card[data-index="3"] { animation-delay: -3s; }
+
 /* Mobile */
 @media (max-width: 768px) {
   .portfolio-section {
@@ -3085,6 +3124,10 @@ a.contact-value:hover {
       box-shadow 0.2s ease,
       opacity 0.2s ease,
       filter 0.2s ease;
+  }
+  .portfolio-card,
+  .portfolio-card.is-spotlight {
+    animation: none !important;
   }
   .portfolio-stage {
     transition: none;
