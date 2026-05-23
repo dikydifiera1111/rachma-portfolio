@@ -111,7 +111,7 @@ export function initPortfolio() {
         filter: "blur(0px)",
         duration: 0.6,
         delay: 0.3 + i * 0.08,
-        ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+        ease: "power3.out",
         onStart: () => el.classList.remove("is-entering"),
       });
     });
