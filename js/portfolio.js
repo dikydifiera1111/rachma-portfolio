@@ -193,6 +193,10 @@ export function initPortfolio() {
         hovering = false;
         cards.forEach((c) => c.classList.remove("is-dim"));
         el.removeEventListener("mousemove", onMove);
+        if (raf) {
+          cancelAnimationFrame(raf);
+          raf = null;
+        }
         reset();
         scheduleNext();
       });
