@@ -1,334 +1,108 @@
 /* ============================================
-   PORTFOLIO — Scroll-morph hero
-   Based on 21st.dev scroll-morph-hero pattern,
-   ported to vanilla JS + GSAP ScrollTrigger.
-   Choreography locked in data/work/PORTFOLIO_BRIEF.md:
-   Lavender (Cronicle) → Teal (Wellpad) → Navy (Raya) → Yellow (Maxim)
+   PORTFOLIO — Liquid Glass + Kinetic Spotlight
+   See spec: docs/superpowers/specs/2026-05-23-portfolio-liquid-glass-design.md
    ============================================ */
 
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Import images as Vite URL assets so they are fingerprinted and copied
-// into dist/ with a base-path-correct URL (fixes GitHub Pages subpath).
 import cronicle1 from "../data/work/cronicle-1.png?url";
-import cronicle2 from "../data/work/cronicle-2.png?url";
 import wellpad1 from "../data/work/wellpad-1.png?url";
-import wellpad2 from "../data/work/wellpad-2.png?url";
 import raya1 from "../data/work/raya-1.png?url";
-import raya2 from "../data/work/raya-2.png?url";
-import maxim1 from "../data/work/maxim-1.png?url";
 import maxim2 from "../data/work/maxim-2.png?url";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Direct Dribbble shot URLs — mapped per project by Rachma.
 const SHOT_URLS = {
-  Cronicle:
-    "https://dribbble.com/shots/22715943-Cronicle-App-UI-UX-Design-Portfolio",
-  Wellpad:
-    "https://dribbble.com/shots/22715683-Wellpad-Health-Lifestyle-App",
-  Raya:
-    "https://dribbble.com/shots/23776552-Banking-Apps-Gamification-Feature-Design",
+  Cronicle: "https://dribbble.com/shots/22715943-Cronicle-App-UI-UX-Design-Portfolio",
+  Wellpad: "https://dribbble.com/shots/22715683-Wellpad-Health-Lifestyle-App",
+  Raya: "https://dribbble.com/shots/23776552-Banking-Apps-Gamification-Feature-Design",
   Maxim: "https://dribbble.com/shots/22715848-Maxim-App-Redesign",
 };
 
 const PROJECTS = [
-  {
-    name: "Cronicle",
-    desc: "Fashion e-commerce · lavender",
-    color: "#C8B6E2",
-    img: cronicle1,
-    url: SHOT_URLS.Cronicle,
-  },
-  {
-    name: "Cronicle",
-    desc: "Product detail · Vindy Knit Cardigan",
-    color: "#C8B6E2",
-    img: cronicle2,
-    url: SHOT_URLS.Cronicle,
-  },
-  {
-    name: "Wellpad",
-    desc: "Wellness in your hand · teal",
-    color: "#2F6A6A",
-    img: wellpad1,
-    url: SHOT_URLS.Wellpad,
-  },
-  {
-    name: "Wellpad",
-    desc: "Home · Hello Lala! dashboard",
-    color: "#2F6A6A",
-    img: wellpad2,
-    url: SHOT_URLS.Wellpad,
-  },
-  {
-    name: "Raya",
-    desc: "Loyalty dashboard · navy",
-    color: "#0B2A5B",
-    img: raya1,
-    url: SHOT_URLS.Raya,
-  },
-  {
-    name: "Raya",
-    desc: "Tier progression · Beginner → Ultimate",
-    color: "#0B2A5B",
-    img: raya2,
-    url: SHOT_URLS.Raya,
-  },
-  {
-    name: "Maxim",
-    desc: "App redesign · yellow",
-    color: "#F7D417",
-    img: maxim2,
-    url: SHOT_URLS.Maxim,
-  },
-  {
-    name: "Maxim",
-    desc: "Home · service grid & Maxim Pay",
-    color: "#F7D417",
-    img: maxim1,
-    url: SHOT_URLS.Maxim,
-  },
+  { name: "Cronicle", caption: "Fashion · Lavender",  color: "#C8B6E2", img: cronicle1, url: SHOT_URLS.Cronicle },
+  { name: "Wellpad",  caption: "Wellness · Teal",     color: "#2F6A6A", img: wellpad1,  url: SHOT_URLS.Wellpad  },
+  { name: "Raya",     caption: "Banking · Navy",      color: "#0B2A5B", img: raya1,     url: SHOT_URLS.Raya     },
+  { name: "Maxim",    caption: "Ride-hail · Yellow",  color: "#F7D417", img: maxim2,    url: SHOT_URLS.Maxim    },
 ];
 
 const TOTAL = PROJECTS.length;
+const SPOTLIGHT_INITIAL = 0;
 
-// --- Helpers ---
-const lerp = (a, b, t) => a * (1 - t) + b * t;
-const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
-
-export function initPortfolio() {
-  const stage = document.getElementById("portfolio-stage");
-  const cardsRoot = document.getElementById("portfolio-cards");
-  const captionProject = document.getElementById("portfolio-caption-project");
-  const captionDesc = document.getElementById("portfolio-caption-desc");
-  if (!stage || !cardsRoot) return;
-
-  // Build cards (anchors so the entire flipped face is clickable)
-  const cards = PROJECTS.map((p, i) => {
+function buildCards(projects, cardsRoot) {
+  return projects.map((p, i) => {
+    const num = String(i + 1).padStart(2, "0");
     const el = document.createElement("a");
-    el.className = "portfolio-card";
+    el.className = "portfolio-card is-entering";
     el.href = p.url;
     el.target = "_blank";
     el.rel = "noopener noreferrer";
-    el.setAttribute(
-      "aria-label",
-      `Open ${p.name} on Dribbble — ${p.desc}`
-    );
+    el.dataset.index = String(i);
     el.style.setProperty("--card-color", p.color);
+    el.setAttribute("role", "listitem");
+    el.setAttribute("aria-label", `${p.name} — ${p.caption}`);
     el.innerHTML = `
-      <div class="portfolio-card-inner">
-        <div class="portfolio-card-face portfolio-card-front">
-          <img src="${p.img}" alt="${p.name} — ${p.desc}" loading="lazy" />
-        </div>
-        <div class="portfolio-card-face portfolio-card-back">
-          <span class="portfolio-card-project">${p.name}</span>
-          <span class="portfolio-card-view">VIEW ↗</span>
-        </div>
+      <div class="portfolio-card-media">
+        <img src="${p.img}" alt="${p.name} — ${p.caption}" loading="lazy" />
+      </div>
+      <div class="portfolio-card-content">
+        <span class="portfolio-card-num">${num}</span>
+        <span class="portfolio-card-spotlight-tag">★ SPOTLIGHT · ${num}</span>
+        <h3 class="portfolio-card-name">${p.name}</h3>
+        <span class="portfolio-card-caption">${p.caption}</span>
+        <span class="portfolio-card-cta">VIEW CASE ↗</span>
       </div>
     `;
     cardsRoot.appendChild(el);
     return el;
   });
+}
 
-  // State
-  let stageRect = stage.getBoundingClientRect();
-  const state = {
-    width: stageRect.width,
-    height: stageRect.height,
-    morph: 0, // 0 circle → 1 bottom-arc
-    rotate: 0, // 0..1 shuffle progress
-    parallax: 0, // -100..100
-    activeIndex: 0,
-  };
+function buildDots(total, dotsRoot, onSelect) {
+  const dots = [];
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement("button");
+    dot.className = "portfolio-dot";
+    dot.type = "button";
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-label", `Show project ${i + 1}`);
+    dot.dataset.index = String(i);
+    dot.addEventListener("click", () => onSelect(i));
+    dotsRoot.appendChild(dot);
+    dots.push(dot);
+  }
+  return dots;
+}
 
-  // Resize
-  const ro = new ResizeObserver(() => {
-    const r = stage.getBoundingClientRect();
-    state.width = r.width;
-    state.height = r.height;
-    render();
-  });
-  ro.observe(stage);
-
-  // Mouse parallax
-  stage.addEventListener("mousemove", (e) => {
-    const r = stage.getBoundingClientRect();
-    const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
-    gsap.to(state, {
-      parallax: nx * 60,
-      duration: 0.8,
-      ease: "power2.out",
-      onUpdate: render,
-    });
-  });
-
-  // Intro sequence: scatter → line → circle
+function applySpotlight(cards, dots, stage, activeIndex) {
   cards.forEach((el, i) => {
-    const sx = (Math.random() - 0.5) * 1200;
-    const sy = (Math.random() - 0.5) * 800;
-    const sr = (Math.random() - 0.5) * 180;
-    gsap.set(el, {
-      x: sx,
-      y: sy,
-      rotation: sr,
-      scale: 0.6,
-      opacity: 0,
-    });
+    el.classList.toggle("is-spotlight", i === activeIndex);
+    el.setAttribute("aria-current", i === activeIndex ? "true" : "false");
   });
-
-  // Line → circle via ScrollTrigger intro (on entering the section)
-  ScrollTrigger.create({
-    trigger: stage,
-    start: "top 80%",
-    once: true,
-    onEnter: () => {
-      // Stage 1: line
-      const spacing = 70;
-      const lineTotal = TOTAL * spacing;
-      cards.forEach((el, i) => {
-        gsap.to(el, {
-          x: i * spacing - lineTotal / 2,
-          y: 0,
-          rotation: 0,
-          scale: 1,
-          opacity: 1,
-          duration: 0.8,
-          delay: 0.05 * i,
-          ease: "power3.out",
-        });
-      });
-      // Stage 2: circle
-      gsap.delayedCall(1.6, () => {
-        state.morph = 0;
-        render();
-      });
-    },
+  dots.forEach((el, i) => {
+    el.classList.toggle("is-active", i === activeIndex);
+    el.setAttribute("aria-selected", i === activeIndex ? "true" : "false");
   });
-
-  // Scroll-driven morph + shuffle — pinned while scrolling through
-  ScrollTrigger.create({
-    trigger: stage,
-    start: "top top",
-    end: "+=2400",
-    pin: true,
-    scrub: 1,
-    onUpdate: (self) => {
-      const p = self.progress; // 0..1 across the pin
-      // First 25% = morph into arc
-      state.morph = clamp(p / 0.25, 0, 1);
-      // Remaining 75% = shuffle rotation
-      state.rotate = clamp((p - 0.25) / 0.75, 0, 1);
-      render();
-      updateCaption();
-      updateBackground(p);
-    },
-  });
-
-  function updateCaption() {
-    // Which card is closest to the apex (angle ≈ -90deg)?
-    const idx = Math.round(state.rotate * (TOTAL - 1));
-    if (idx !== state.activeIndex) {
-      state.activeIndex = idx;
-      const p = PROJECTS[idx];
-      captionProject.textContent = p.name;
-      captionDesc.textContent = p.desc;
-    }
-  }
-
-  function updateBackground(p) {
-    // Color arc: Lavender → Teal → Navy → Yellow
-    // 4 stops across the pin
-    const stops = ["#C8B6E2", "#2F6A6A", "#0B2A5B", "#F7D417"];
-    const seg = 1 / (stops.length - 1);
-    const i = clamp(Math.floor(p / seg), 0, stops.length - 2);
-    const t = (p - i * seg) / seg;
-    const c = mixHex(stops[i], stops[i + 1], t);
-    stage.style.setProperty("--stage-color", c);
-  }
-
-  // Initial caption + bg
-  captionProject.textContent = PROJECTS[0].name;
-  captionDesc.textContent = PROJECTS[0].desc;
-  stage.style.setProperty("--stage-color", PROJECTS[0].color);
-
-  // --- Render loop ---
-  function render() {
-    const { width, height, morph, rotate, parallax } = state;
-    const isMobile = width < 768;
-    const minDim = Math.min(width, height);
-
-    // Circle geometry
-    const circleR = Math.min(minDim * 0.32, 280);
-
-    // Arc geometry
-    const baseR = Math.min(width, height * 1.5);
-    const arcR = baseR * (isMobile ? 1.3 : 1.0);
-    const apexY = height * (isMobile ? 0.4 : 0.3);
-    const arcCY = apexY + arcR;
-    const spread = isMobile ? 100 : 130;
-    const startA = -90 - spread / 2;
-    const step = spread / (TOTAL - 1);
-
-    // Shuffle rotation bounded within spread
-    const maxRot = spread * 0.8;
-    const boundedRot = -rotate * maxRot;
-
-    cards.forEach((el, i) => {
-      // Circle pos
-      const cA = (i / TOTAL) * 360;
-      const cRad = (cA * Math.PI) / 180;
-      const cx = Math.cos(cRad) * circleR;
-      const cy = Math.sin(cRad) * circleR;
-      const cRot = cA + 90;
-
-      // Arc pos
-      const aA = startA + i * step + boundedRot;
-      const aRad = (aA * Math.PI) / 180;
-      const ax = Math.cos(aRad) * arcR + parallax;
-      const ay = Math.sin(aRad) * arcR + arcCY - height / 2;
-      const aRot = aA + 90;
-      const aScale = isMobile ? 1.25 : 1.55;
-
-      // Interpolate
-      const x = lerp(cx, ax, morph);
-      const y = lerp(cy, ay, morph);
-      const rot = lerp(cRot, aRot, morph);
-      const scale = lerp(1, aScale, morph);
-
-      // Highlight the active (apex-closest) card
-      const isActive = i === state.activeIndex && morph > 0.8;
-      const bonusScale = isActive ? 1.15 : 1;
-
-      gsap.set(el, {
-        x,
-        y,
-        rotation: rot,
-        scale: scale * bonusScale,
-        zIndex: isActive ? 10 : 1,
-      });
-    });
-  }
-
-  render();
+  // The stage's background `transition: background 0.7s ease` (set in CSS)
+  // handles the visual crossfade — we just need to set the new color.
+  stage.style.setProperty("--stage-color", PROJECTS[activeIndex].color);
 }
 
-// --- Hex color mixer ---
-function mixHex(a, b, t) {
-  const pa = parseHex(a);
-  const pb = parseHex(b);
-  const r = Math.round(lerp(pa.r, pb.r, t));
-  const g = Math.round(lerp(pa.g, pb.g, t));
-  const bl = Math.round(lerp(pa.b, pb.b, t));
-  return `rgb(${r}, ${g}, ${bl})`;
-}
+export function initPortfolio() {
+  const stage = document.getElementById("portfolio-stage");
+  const cardsRoot = document.getElementById("portfolio-cards");
+  const dotsRoot = document.getElementById("portfolio-dots");
+  if (!stage || !cardsRoot || !dotsRoot) return;
 
-function parseHex(h) {
-  const s = h.replace("#", "");
-  return {
-    r: parseInt(s.slice(0, 2), 16),
-    g: parseInt(s.slice(2, 4), 16),
-    b: parseInt(s.slice(4, 6), 16),
-  };
+  const cards = buildCards(PROJECTS, cardsRoot);
+
+  let activeIndex = SPOTLIGHT_INITIAL;
+  const dots = buildDots(TOTAL, dotsRoot, (i) => {
+    activeIndex = i;
+    applySpotlight(cards, dots, stage, activeIndex);
+  });
+
+  // Initial paint: remove .is-entering after a frame so transition applies
+  requestAnimationFrame(() => {
+    cards.forEach((el) => el.classList.remove("is-entering"));
+    applySpotlight(cards, dots, stage, activeIndex);
+  });
 }
