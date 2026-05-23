@@ -37,7 +37,6 @@ function buildCards(projects, cardsRoot) {
     el.rel = "noopener noreferrer";
     el.dataset.index = String(i);
     el.style.setProperty("--card-color", p.color);
-    el.setAttribute("role", "listitem");
     el.setAttribute("aria-label", `${p.name} — ${p.caption}`);
     el.innerHTML = `
       <div class="portfolio-card-media">
