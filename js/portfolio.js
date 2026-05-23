@@ -119,7 +119,13 @@ export function initPortfolio() {
 
   function scheduleNext() {
     clearTimeout(rotationTimer);
-    if (!shouldAutoRotate()) return;
+    if (prefersReducedMotion || !inViewport || hovering) return;
+    const remaining = manualLockUntil - Date.now();
+    if (remaining > 0) {
+      // Lock still active — re-evaluate when it expires so rotation resumes itself
+      rotationTimer = setTimeout(scheduleNext, remaining);
+      return;
+    }
     rotationTimer = setTimeout(() => {
       activeIndex = (activeIndex + 1) % TOTAL;
       applySpotlight(cards, dots, stage, activeIndex);
@@ -187,22 +193,25 @@ export function initPortfolio() {
     }, 900);
   }
 
-  // Trigger entry once when the section is in view
+  // Trigger entry once when the section is in view, then switch to a
+  // long-lived presence observer that toggles rotation as the section
+  // scrolls in and out.
+  let entryFired = false;
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       inViewport = entry.isIntersecting;
-      if (inViewport && entry.intersectionRatio >= 0.2) {
-        runEntryAnimation();
-        io.unobserve(stage);
-        const presenceIo = new IntersectionObserver((es) => {
-          es.forEach((e) => {
-            inViewport = e.isIntersecting;
-            if (inViewport) scheduleNext();
-            else clearTimeout(rotationTimer);
-          });
-        }, { threshold: 0.1 });
-        presenceIo.observe(stage);
-      }
+      if (entryFired || !inViewport || entry.intersectionRatio < 0.2) return;
+      entryFired = true;
+      runEntryAnimation();
+      io.unobserve(stage);
+      const presenceIo = new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          inViewport = e.isIntersecting;
+          if (inViewport) scheduleNext();
+          else clearTimeout(rotationTimer);
+        });
+      }, { threshold: 0.1 });
+      presenceIo.observe(stage);
     });
   }, { threshold: 0.2 });
   io.observe(stage);
