@@ -92,6 +92,7 @@ export function initPortfolio() {
   if (!stage || !cardsRoot || !dotsRoot) return;
 
   const cards = buildCards(PROJECTS, cardsRoot);
+  gsap.set(cards, { opacity: 0, y: 40, scale: 0.95, filter: "blur(8px)" });
 
   let activeIndex = SPOTLIGHT_INITIAL;
   const dots = buildDots(TOTAL, dotsRoot, (i) => {
@@ -99,9 +100,35 @@ export function initPortfolio() {
     applySpotlight(cards, dots, stage, activeIndex);
   });
 
-  // Initial paint: remove .is-entering after a frame so transition applies
-  requestAnimationFrame(() => {
-    cards.forEach((el) => el.classList.remove("is-entering"));
-    applySpotlight(cards, dots, stage, activeIndex);
-  });
+  const marquee = stage.querySelector(".portfolio-marquee");
+
+  function runEntryAnimation() {
+    cards.forEach((el, i) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.6,
+        delay: 0.3 + i * 0.08,
+        ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+        onStart: () => el.classList.remove("is-entering"),
+      });
+    });
+    if (marquee) {
+      setTimeout(() => marquee.classList.add("is-ready"), 200);
+    }
+    setTimeout(() => applySpotlight(cards, dots, stage, activeIndex), 900);
+  }
+
+  // Trigger entry once when the section is in view
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        runEntryAnimation();
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+  io.observe(stage);
 }
