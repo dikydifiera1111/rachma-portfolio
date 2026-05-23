@@ -239,6 +239,33 @@ export function initPortfolio() {
     });
   }
 
+  // Touch / swipe support (mobile)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchActive = false;
+  const SWIPE_THRESHOLD = 40;
+
+  stage.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchActive = true;
+  }, { passive: true });
+
+  stage.addEventListener("touchend", (e) => {
+    if (!touchActive) return;
+    touchActive = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    // Only treat as a swipe if horizontal motion dominates
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if (Math.abs(dx) < Math.abs(dy)) return;
+    const dir = dx < 0 ? 1 : -1; // swipe left → next
+    const next = (activeIndex + dir + TOTAL) % TOTAL;
+    selectIndex(next, true);
+  }, { passive: true });
+
   function runEntryAnimation() {
     cards.forEach((el, i) => {
       gsap.to(el, {
