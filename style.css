@@ -3562,7 +3562,7 @@ a.contact-value:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 5rem;
   padding: 2rem 0;
   pointer-events: none;
 }
@@ -3570,6 +3570,7 @@ a.contact-value:hover {
 .carousel-head {
   text-align: center;
   padding: 0 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .carousel-eyebrow {
