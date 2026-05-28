@@ -106,7 +106,6 @@
       <!-- ==================== NAVIGATION ==================== -->
       <nav id="navbar" class="navbar">
         <div class="nav-container">
-          <a href="#" class="nav-logo">rachma.design</a>
           <a href="mailto:bungaracma@gmail.com" class="nav-email"
             >bungaracma@gmail.com</a
           >
@@ -288,7 +287,7 @@
             </div>
 
             <img
-              src="./data/Rachma Bunga Safitrie.jpeg"
+              src="./data/profile-photo-v2.jpeg"
               alt="Rachma Bunga Safitrie - UI/UX Designer"
               class="hero-photo"
               width="320"
@@ -766,35 +765,173 @@
         </div>
       </section>
 
-      <!-- ==================== PORTFOLIO (SCROLL-MORPH) ==================== -->
+      <!-- ==================== PORTFOLIO (CINEMATIC) ==================== -->
       <section id="portfolio" class="portfolio-section">
-        <h2 class="section-heading-outline">Portofolio</h2>
-        <div id="portfolio-stage" class="portfolio-stage">
-          <div class="portfolio-intro">
-            <h3 class="portfolio-intro-title">Selected Work</h3>
-            <p class="portfolio-intro-sub">SCROLL TO EXPLORE</p>
+        <div id="cinematic-portfolio" class="cinematic-portfolio">
+          <div class="film-grain" aria-hidden="true"></div>
+          <div class="bg-grid-theme" aria-hidden="true"></div>
+
+          <!-- BG LAYER: Hero taglines -->
+          <div class="hero-text-wrapper">
+            <h2 class="text-track gsap-reveal text-3d-matte">
+              Designing journeys,
+            </h2>
+            <h2 class="text-days gsap-reveal text-silver-matte">
+              not just screens.
+            </h2>
           </div>
-          <div class="portfolio-outro">
-            <h3 class="portfolio-outro-title">Four projects. One journey.</h3>
-            <p class="portfolio-outro-sub">Lavender → Teal → Navy → Yellow</p>
-            <a
-              href="https://dribbble.com/bungaracma"
-              target="_blank"
-              rel="noopener"
-              class="portfolio-outro-cta"
-              >View full portfolio ↗</a
-            >
+
+          <!-- BG LAYER 2: CTA after card pullback -->
+          <div class="cta-wrapper gsap-reveal">
+            <h2 class="cta-heading text-silver-matte">Let's work together.</h2>
+            <p class="cta-desc">
+              Have a product that needs thoughtful design? Let's turn it into
+              something people love to use.
+            </p>
+            <div class="cta-buttons">
+              <a
+                href="https://dribbble.com/bungaracma"
+                target="_blank"
+                rel="noopener"
+                class="btn-modern-light"
+                aria-label="View portfolio on Dribbble"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7.917 5.534c1.473 1.794 2.357 4.08 2.376 6.566-.346-.072-3.81-.776-7.297-.34-.077-.18-.146-.366-.227-.553-.214-.502-.45-1.006-.696-1.49 3.853-1.572 5.6-3.835 5.844-4.183zM12 2.073c2.605 0 4.987.977 6.798 2.582-.205.292-1.78 2.41-5.5 3.81-1.713-3.146-3.61-5.726-3.9-6.123A10.04 10.04 0 0112 2.073zM7.13 3.292c.276.376 2.138 2.97 3.872 6.05-4.887 1.3-9.2 1.278-9.666 1.272A10.01 10.01 0 017.13 3.292zM2.07 12.012v-.31c.453.01 5.526.077 10.74-1.488.302.587.59 1.182.85 1.776-.135.038-.27.077-.4.118-5.394 1.74-8.26 6.494-8.5 6.894A9.95 9.95 0 012.07 12.01zm9.93 9.917a9.93 9.93 0 01-6.135-2.113c.188-.39 2.31-4.474 8.215-6.534.025-.01.046-.014.07-.022 1.476 3.832 2.083 7.047 2.24 7.967a9.9 9.9 0 01-4.39 1.702zm6.398-2.78c-.106-.633-.66-3.703-2.034-7.483 3.286-.524 6.16.33 6.52.45a9.96 9.96 0 01-4.486 7.034z"/>
+                </svg>
+                <div class="btn-label">
+                  <span class="btn-sub">View work on</span>
+                  <span class="btn-main">Dribbble</span>
+                </div>
+              </a>
+              <a
+                href="mailto:bungaracma@gmail.com"
+                class="btn-modern-dark"
+                aria-label="Send an email"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <div class="btn-label">
+                  <span class="btn-sub">Drop me a</span>
+                  <span class="btn-main">Message</span>
+                </div>
+              </a>
+            </div>
           </div>
-          <div id="portfolio-cards" class="portfolio-cards"></div>
-          <div class="portfolio-caption" id="portfolio-caption">
-            <span
-              class="portfolio-caption-project"
-              id="portfolio-caption-project"
-            ></span>
-            <span
-              class="portfolio-caption-desc"
-              id="portfolio-caption-desc"
-            ></span>
+
+          <!-- FOREGROUND: Physical deep card -->
+          <div class="card-stage" aria-hidden="false">
+            <div class="main-card premium-depth-card gsap-reveal">
+              <div class="card-sheen" aria-hidden="true"></div>
+
+              <div class="card-grid">
+                <!-- RIGHT (desktop) / TOP (mobile): brand name -->
+                <div class="card-right-text gsap-reveal">
+                  <h2 class="card-brand text-card-silver-matte">RACHMA</h2>
+                </div>
+
+                <!-- CENTER: iPhone mockup -->
+                <div class="mockup-scroll-wrapper">
+                  <div class="mockup-scaler">
+                    <div class="mockup-device iphone-bezel">
+                      <div class="hardware-btn hw-1" aria-hidden="true"></div>
+                      <div class="hardware-btn hw-2" aria-hidden="true"></div>
+                      <div class="hardware-btn hw-3" aria-hidden="true"></div>
+                      <div class="hardware-btn hw-4" aria-hidden="true"></div>
+
+                      <div class="mockup-screen">
+                        <div class="screen-glare" aria-hidden="true"></div>
+                        <div class="dynamic-island">
+                          <span class="island-dot"></span>
+                        </div>
+
+                        <!-- App interface: real project shot -->
+                        <div class="app-interface">
+                          <div class="phone-widget app-topbar">
+                            <div class="app-topbar-text">
+                              <span class="app-eyebrow">Selected</span>
+                              <span class="app-title">Featured Work</span>
+                            </div>
+                            <div class="app-avatar">RB</div>
+                          </div>
+
+                          <div class="phone-widget app-counter">
+                            <svg class="counter-svg" viewBox="0 0 176 176" aria-hidden="true">
+                              <circle class="ring-track" cx="88" cy="88" r="64" fill="none" stroke-width="12" />
+                              <circle class="progress-ring" cx="88" cy="88" r="64" fill="none" stroke-width="12" />
+                            </svg>
+                            <div class="counter-content">
+                              <span class="counter-val">0</span>
+                              <span class="counter-label">Featured Projects</span>
+                            </div>
+                          </div>
+
+                          <div class="phone-widget app-shot">
+                            <img
+                              id="portfolio-mockup-shot"
+                              alt="Featured project — Cronicle app UI design"
+                              loading="lazy"
+                            />
+                          </div>
+
+                          <div class="phone-home-bar" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Floating glass badges -->
+                    <div class="floating-badge floating-ui-badge badge-tl">
+                      <div class="badge-icon icon-purple">
+                        <span aria-hidden="true">✦</span>
+                      </div>
+                      <div class="badge-text">
+                        <p class="badge-title">4 Apps Shipped</p>
+                        <p class="badge-sub">End-to-end UI/UX</p>
+                      </div>
+                    </div>
+
+                    <div class="floating-badge floating-ui-badge badge-br">
+                      <div class="badge-icon icon-indigo">
+                        <span aria-hidden="true">◆</span>
+                      </div>
+                      <div class="badge-text">
+                        <p class="badge-title">Product Design</p>
+                        <p class="badge-sub">Jakarta · Indonesia</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- LEFT (desktop) / BOTTOM (mobile): heading + desc -->
+                <div class="card-left-text gsap-reveal">
+                  <h3 class="card-heading">Design that ships.</h3>
+                  <p class="card-desc">
+                    <span class="card-desc-strong">Rachma</span> turns complex
+                    flows into clean, usable products — from e-commerce and
+                    fintech to wellness apps, designed end to end.
+                  </p>
+                </div>
+              </div>
+
+              <!-- GALLERY LAYER: horizontal scroll-x carousel (revealed after mockup disposes) -->
+              <div class="carousel-layer">
+                <div class="carousel-head">
+                  <span class="carousel-eyebrow">Selected Work</span>
+                  <h3 class="carousel-title text-card-silver-matte">
+                    Projects, end to end.
+                  </h3>
+                </div>
+                <div class="carousel-viewport">
+                  <div class="carousel-fade carousel-fade-left" aria-hidden="true"></div>
+                  <div class="carousel-fade carousel-fade-right" aria-hidden="true"></div>
+                  <div class="carousel-track" id="portfolio-carousel-track"></div>
+                </div>
+                <div class="carousel-progress" aria-hidden="true">
+                  <div class="carousel-progress-bar" id="portfolio-carousel-progress"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

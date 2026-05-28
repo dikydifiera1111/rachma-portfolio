@@ -26,7 +26,16 @@
       "Bash(npm show *)",
       "Bash(npm run *)",
       "Read(//tmp/**)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode\" --max-time 10)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://prod.spline.design/dUPmVvR1pgPdtnM9/scene.splinecode\" --max-time 10)",
+      "Bash(rtk git *)",
+      "Bash(dig bungaracma.my.id +short A)",
+      "Bash(dig bungaracma.my.id +short NS)",
+      "Bash(dig bungaracma.my.id +short SOA)",
+      "Bash(dig @8.8.8.8 bungaracma.my.id +short A)",
+      "Bash(rtk curl *)",
+      "Bash(dig @8.8.8.8 www.bungaracma.my.id +short)",
+      "Bash(dig @8.8.8.8 www.bungaracma.my.id +short A)",
+      "Bash(rtk ls *)"
     ]
   },
   "enabledPlugins": {
