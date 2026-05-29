@@ -3769,6 +3769,53 @@ a.contact-value:hover {
 }
 
 /* ============================================
+   PORTFOLIO HOVER MODAL — cursor-following preview
+   ============================================ */
+.pf-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 180px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #000;
+  pointer-events: none;
+  /* gsap drives xPercent/yPercent (-50) + scale via transform; start hidden */
+  transform: scale(0);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+}
+
+.pf-modal-slider {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  /* Smoothly slides to top: index * -100% to swap the visible cover */
+  transition: top 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.pf-modal-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 0.35rem 0.85rem;
+  background: #000;
+}
+
+.pf-modal-frame img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0.2rem;
+}
+
+/* ============================================
    CUSTOM CURSOR — inverted blend with purple tint
    ============================================ */
 .custom-cursor {

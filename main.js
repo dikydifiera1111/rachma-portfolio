@@ -21,6 +21,7 @@ import { initRobot } from "./js/robot.js";
 import { initBoxes } from "./js/boxes.js";
 import { initSocial3D } from "./js/social3d.js";
 import { initPortfolio } from "./js/portfolio.js";
+import { initPortfolioModal } from "./js/portfolio-modal.js";
 import { initHeadings } from "./js/headings.js";
 import { initParallax } from "./js/parallax.js";
 import { initFocusRail } from "./js/focus-rail.js";
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initBoxes();
   initSocial3D();
   initPortfolio();
+  initPortfolioModal();
   initHeadings();
   initParallax();
   initFocusRail();
