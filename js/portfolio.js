@@ -160,7 +160,7 @@ export function initPortfolio() {
       filter: "blur(30px)",
     });
     gsap.set(".carousel-layer", { autoAlpha: 0 });
-    gsap.set(".carousel-track", { x: 0 });
+    gsap.set(".carousel-track", { y: 0 });
     gsap.set(".carousel-progress-bar", { scaleX: 0 });
 
     // Intro: hero text reveal
@@ -186,10 +186,11 @@ export function initPortfolio() {
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: "+=2250",
+        end: "+=3400",
         pin: true,
         scrub: 1,
         anticipatePin: 1,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -319,7 +320,7 @@ export function initPortfolio() {
       )
       .to(
         ".carousel-track",
-        { x: () => -getCarouselTravel(), ease: "none", duration: 5 },
+        { y: () => -getCarouselTravel(), ease: "none", duration: 5 },
         "<+=0.5",
       )
       .to(
@@ -327,6 +328,8 @@ export function initPortfolio() {
         { scaleX: 1, ease: "none", duration: 5 },
         "<",
       )
+      // Hold at the bottom so the last row (project 5) is actually seen.
+      .to({}, { duration: 1.5 })
       .to(".carousel-layer", {
         autoAlpha: 0,
         y: -40,
@@ -369,7 +372,7 @@ export function initPortfolio() {
   // --- Build the gallery cards from SLIDES ---
   function buildCarousel() {
     const track = document.getElementById("portfolio-carousel-track");
-    if (!track || track.childElementCount) return;
+    if (!track || track.querySelector(".carousel-card")) return;
     SLIDES.forEach((s) => {
       const card = document.createElement("a");
       card.className = "carousel-card";
@@ -405,12 +408,12 @@ export function initPortfolio() {
     });
   }
 
-  // Horizontal travel distance = track width beyond the viewport.
+  // Vertical travel distance = track height beyond the viewport.
   function getCarouselTravel() {
     const track = document.getElementById("portfolio-carousel-track");
     const viewport = container.querySelector(".carousel-viewport");
     if (!track || !viewport) return 0;
-    const overflow = track.scrollWidth - viewport.clientWidth;
+    const overflow = track.scrollHeight - viewport.clientHeight;
     return Math.max(overflow, 0);
   }
 }

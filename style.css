@@ -3562,15 +3562,17 @@ a.contact-value:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5rem;
+  gap: 1.5rem;
   padding: 2rem 0;
   pointer-events: none;
 }
 
 .carousel-head {
+  grid-column: 1 / -1;
   text-align: center;
-  padding: 0 2rem;
-  margin-bottom: 1.5rem;
+  padding: 0;
+  margin-top: 7rem;
+  margin-bottom: 1rem;
 }
 
 .carousel-eyebrow {
@@ -3595,47 +3597,53 @@ a.contact-value:hover {
 .carousel-viewport {
   position: relative;
   width: 100%;
+  /* Bounded height so the vertical grid track can overflow & scroll inside */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
 }
 
 .carousel-fade {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
   pointer-events: none;
 }
+/* Vertical scroll → fades at top & bottom edges */
 .carousel-fade-left {
-  left: 0;
-  width: 8vw;
+  top: 0;
+  height: 10%;
   background: linear-gradient(
-    90deg,
+    180deg,
     rgba(10, 7, 22, 0.9) 20%,
     transparent
   );
 }
 .carousel-fade-right {
-  right: 0;
-  width: 8vw;
+  bottom: 0;
+  height: 10%;
   background: linear-gradient(
-    270deg,
+    0deg,
     rgba(10, 7, 22, 0.9) 20%,
     transparent
   );
 }
 
 .carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  width: fit-content;
-  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
   will-change: transform;
 }
 
 .carousel-card {
   position: relative;
-  flex-shrink: 0;
-  width: 70vw;
+  width: 100%;
   aspect-ratio: 4 / 3;
   border-radius: 1rem;
   overflow: hidden;
@@ -3753,15 +3761,10 @@ a.contact-value:hover {
   transform-origin: left;
 }
 
+/* Desktop/tablet → 2-column grid. Mobile stays 1-column (default above). */
 @media (min-width: 768px) {
-  .carousel-card {
-    width: 38vw;
-  }
-}
-
-@media (min-width: 1280px) {
-  .carousel-card {
-    width: 30vw;
+  .carousel-track {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
