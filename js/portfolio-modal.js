@@ -15,9 +15,10 @@ import dribble2 from "../data/work/dribble-2.png?url";
 import dribble3 from "../data/work/dribble-3.png?url";
 import dribble4 from "../data/work/dribble-4.png?url";
 import dribble5 from "../data/work/dribble-5.png?url";
+import dribble6 from "../data/work/dribble-6.png?url";
 
 // Order MUST match the SLIDES order in portfolio.js (card index → image).
-const COVERS = [dribble5, dribble1, dribble2, dribble3, dribble4];
+const COVERS = [dribble6, dribble5, dribble1, dribble2, dribble3, dribble4];
 
 export function initPortfolioModal() {
   const track = document.getElementById("portfolio-carousel-track");

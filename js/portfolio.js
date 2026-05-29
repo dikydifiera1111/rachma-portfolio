@@ -17,13 +17,23 @@ import dribble2 from "../data/work/dribble-2.png?url";
 import dribble3 from "../data/work/dribble-3.png?url";
 import dribble4 from "../data/work/dribble-4.png?url";
 import dribble5 from "../data/work/dribble-5.png?url";
+import dribble6 from "../data/work/dribble-6.png?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRIC_VALUE = 5; // counter target — featured projects
+const METRIC_VALUE = 6; // counter target — featured projects
 
 // Gallery slides — Rachma's featured Dribbble projects.
 const SLIDES = [
+  {
+    title: "Saku Bareng — Community Saving",
+    type: "Fintech",
+    services: ["product design", "ui/ux", "data viz"],
+    description:
+      "A community savings feature for Bank Raya (BRI Group) — shared group pockets with expense breakdowns, member tracking, and transaction reports that make saving together transparent and effortless.",
+    img: dribble6,
+    url: "https://dribbble.com/shots/27421461-Saku-Bareng-Community-Saving-Bank-Raya",
+  },
   {
     title: "Bank Raya — Personal Finance",
     type: "Fintech",
