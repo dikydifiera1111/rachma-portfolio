@@ -16,13 +16,23 @@ import dribble1 from "../data/work/dribble-1.png?url";
 import dribble2 from "../data/work/dribble-2.png?url";
 import dribble3 from "../data/work/dribble-3.png?url";
 import dribble4 from "../data/work/dribble-4.png?url";
+import dribble5 from "../data/work/dribble-5.png?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRIC_VALUE = 4; // counter target — featured projects
+const METRIC_VALUE = 5; // counter target — featured projects
 
 // Gallery slides — Rachma's featured Dribbble projects.
 const SLIDES = [
+  {
+    title: "Bank Raya — Personal Finance",
+    type: "Fintech",
+    services: ["product design", "ui/ux", "data viz"],
+    description:
+      "A personal financial management feature for Bank Raya (BRI Group) — smart transaction categorization that makes tracking spending across travel, shopping, and daily life feel effortless and genuinely different.",
+    img: dribble5,
+    url: "https://dribbble.com/shots/27419295-Personal-Financial-Management-Bank-Raya-Indonesia",
+  },
   {
     title: "Raya — Banking Gamification",
     type: "Fintech",
@@ -144,7 +154,11 @@ export function initPortfolio() {
       ],
       { autoAlpha: 0 },
     );
-    gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" });
+    gsap.set(".cta-wrapper", {
+      autoAlpha: 0,
+      scale: 0.8,
+      filter: "blur(30px)",
+    });
     gsap.set(".carousel-layer", { autoAlpha: 0 });
     gsap.set(".carousel-track", { x: 0 });
     gsap.set(".carousel-progress-bar", { scaleX: 0 });
@@ -172,7 +186,7 @@ export function initPortfolio() {
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: "+=4500",
+        end: "+=2250",
         pin: true,
         scrub: 1,
         anticipatePin: 1,
@@ -201,7 +215,14 @@ export function initPortfolio() {
       })
       .fromTo(
         ".mockup-scroll-wrapper",
-        { y: 300, z: -500, rotationX: 50, rotationY: -30, autoAlpha: 0, scale: 0.6 },
+        {
+          y: 300,
+          z: -500,
+          rotationX: 50,
+          rotationY: -30,
+          autoAlpha: 0,
+          scale: 0.6,
+        },
         {
           y: 0,
           z: 0,
@@ -268,9 +289,9 @@ export function initPortfolio() {
         { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 },
         "<",
       )
-      .to({}, { duration: 2.5 })
+      .to({}, { duration: 0.8 })
       .set(".hero-text-wrapper", { autoAlpha: 0 })
-      .to({}, { duration: 1.5 })
+      .to({}, { duration: 0.5 })
       // --- Dispose mockup/badges/text (screenshot 1 → 2) ---
       .to(
         [
@@ -357,7 +378,9 @@ export function initPortfolio() {
       card.rel = "noopener noreferrer";
       card.setAttribute("aria-label", `Open ${s.title} on Dribbble`);
       const services = s.services
-        .map((svc) => `<span class="carousel-badge badge-service">${svc}</span>`)
+        .map(
+          (svc) => `<span class="carousel-badge badge-service">${svc}</span>`,
+        )
         .join("");
       card.innerHTML = `
         <img class="carousel-card-img" src="${s.img}" alt="${s.title}" loading="lazy" />
