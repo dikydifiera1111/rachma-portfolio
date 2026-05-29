@@ -16,7 +16,7 @@ import { initNavigation } from "./js/navigation.js";
 import { initHero } from "./js/hero.js";
 import { initTimeline } from "./js/timeline.js";
 import { initSkills } from "./js/skills.js";
-import { initParticles } from "./js/particles.js";
+import { initHeroClouds } from "./js/hero-clouds.js";
 import { initRobot } from "./js/robot.js";
 import { initBoxes } from "./js/boxes.js";
 import { initSocial3D } from "./js/social3d.js";
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initIntro();
   initSmoothScroll();
   initNavigation();
-  initParticles();
+  initHeroClouds();
   initHero();
   initTimeline();
   initSkills();

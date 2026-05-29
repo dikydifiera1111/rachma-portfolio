@@ -687,12 +687,13 @@ p {
   padding: 6rem 2rem 4rem;
 }
 
+/* Old particle canvas — replaced by Vanta CLOUDS, kept hidden. */
 .hero-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  display: none;
+}
+
+/* Vanta injects an absolutely-positioned canvas; keep it behind content. */
+.hero-section > .vanta-canvas {
   z-index: 0;
 }
 

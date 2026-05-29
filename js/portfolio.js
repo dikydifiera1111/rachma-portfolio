@@ -214,6 +214,35 @@ export function initPortfolio() {
         ease: "power3.inOut",
         duration: 1.5,
       })
+      // Hero text fades once the card has fully risen.
+      .set(".hero-text-wrapper", { autoAlpha: 0 })
+      // --- GALLERY (now first): reveal carousel, scroll it, dispose ---
+      .fromTo(
+        ".carousel-layer",
+        { autoAlpha: 0, y: 60, scale: 0.95 },
+        { autoAlpha: 1, y: 0, scale: 1, ease: "expo.out", duration: 1.2 },
+        "-=0.3",
+      )
+      .to(
+        ".carousel-track",
+        { y: () => -getCarouselTravel(), ease: "none", duration: 5 },
+        "<+=0.5",
+      )
+      .to(
+        ".carousel-progress-bar",
+        { scaleX: 1, ease: "none", duration: 5 },
+        "<",
+      )
+      // Hold at the bottom so the last row (project 5) is actually seen.
+      .to({}, { duration: 1.5 })
+      .to(".carousel-layer", {
+        autoAlpha: 0,
+        y: -40,
+        scale: 0.95,
+        ease: "power3.in",
+        duration: 1.2,
+      })
+      // --- MOCKUP (now second): reveal iPhone + widgets + badges + text ---
       .fromTo(
         ".mockup-scroll-wrapper",
         {
@@ -234,7 +263,7 @@ export function initPortfolio() {
           ease: "expo.out",
           duration: 2.5,
         },
-        "-=0.8",
+        "-=0.3",
       )
       .fromTo(
         ".phone-widget",
@@ -290,10 +319,9 @@ export function initPortfolio() {
         { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 },
         "<",
       )
-      .to({}, { duration: 0.8 })
-      .set(".hero-text-wrapper", { autoAlpha: 0 })
-      .to({}, { duration: 0.5 })
-      // --- Dispose mockup/badges/text (screenshot 1 → 2) ---
+      // Hold so the mockup show-off is actually seen before pullback.
+      .to({}, { duration: 1.5 })
+      // Dispose mockup/badges/text before the CTA pullback.
       .to(
         [
           ".mockup-scroll-wrapper",
@@ -311,32 +339,6 @@ export function initPortfolio() {
           stagger: 0.04,
         },
       )
-      // --- GALLERY: reveal carousel, scroll it horizontally, dispose ---
-      .fromTo(
-        ".carousel-layer",
-        { autoAlpha: 0, y: 60, scale: 0.95 },
-        { autoAlpha: 1, y: 0, scale: 1, ease: "expo.out", duration: 1.2 },
-        "-=0.3",
-      )
-      .to(
-        ".carousel-track",
-        { y: () => -getCarouselTravel(), ease: "none", duration: 5 },
-        "<+=0.5",
-      )
-      .to(
-        ".carousel-progress-bar",
-        { scaleX: 1, ease: "none", duration: 5 },
-        "<",
-      )
-      // Hold at the bottom so the last row (project 5) is actually seen.
-      .to({}, { duration: 1.5 })
-      .to(".carousel-layer", {
-        autoAlpha: 0,
-        y: -40,
-        scale: 0.95,
-        ease: "power3.in",
-        duration: 1.2,
-      })
       // --- Pullback to CTA ---
       .set(".cta-wrapper", { autoAlpha: 1 })
       .to(
