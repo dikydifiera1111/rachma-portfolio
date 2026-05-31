@@ -24,13 +24,28 @@ export function initNavigation() {
       e.preventDefault();
       const targetId = link.getAttribute("href");
       const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        const lenis = getLenis();
-        if (lenis) {
-          lenis.scrollTo(targetEl);
-        } else {
-          targetEl.scrollIntoView({ behavior: "smooth" });
+      if (!targetEl) return;
+
+      // The portfolio is a pinned scroll timeline — its section top is the hero
+      // intro, and the gallery grid only appears partway through the pin. Jump
+      // straight to the scroll position where the grid is fully revealed
+      // (the "galleryReveal" label set in portfolio.js).
+      let targetY = targetEl;
+      if (targetId === "#portfolio") {
+        const st = targetEl.querySelector(".cinematic-portfolio")?._portfolioST;
+        const labelY = st?.labelToScroll?.("galleryReveal");
+        if (typeof labelY === "number" && !Number.isNaN(labelY)) {
+          targetY = labelY;
         }
+      }
+
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(targetY);
+      } else if (typeof targetY === "number") {
+        window.scrollTo({ top: targetY, behavior: "smooth" });
+      } else {
+        targetY.scrollIntoView({ behavior: "smooth" });
       }
     });
   });

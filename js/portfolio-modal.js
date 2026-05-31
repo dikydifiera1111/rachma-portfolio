@@ -9,23 +9,20 @@
 
 import gsap from "gsap";
 
-// Same cover shots used by the gallery (Vite-fingerprinted URLs).
-import dribble1 from "../data/work/dribble-1.png?url";
-import dribble2 from "../data/work/dribble-2.png?url";
-import dribble3 from "../data/work/dribble-3.png?url";
-import dribble4 from "../data/work/dribble-4.png?url";
-import dribble5 from "../data/work/dribble-5.png?url";
-import dribble6 from "../data/work/dribble-6.png?url";
-
-// Order MUST match the SLIDES order in portfolio.js (card index → image).
-const COVERS = [dribble6, dribble5, dribble1, dribble2, dribble3, dribble4];
-
 export function initPortfolioModal() {
   const track = document.getElementById("portfolio-carousel-track");
   if (!track) return;
 
   // Respect reduced-motion: no floating modal at all.
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Source of truth: the gallery cards themselves (built by portfolio.js from
+  // SLIDES). Reading each card's own <img> keeps the modal in sync with the
+  // gallery order automatically — no separate COVERS list to drift out of date.
+  const cards = Array.prototype.slice.call(
+    track.querySelectorAll(".carousel-card"),
+  );
+  if (!cards.length) return;
 
   // --- Build modal DOM on <body> ---
   const modal = document.createElement("div");
@@ -34,11 +31,12 @@ export function initPortfolioModal() {
 
   const slider = document.createElement("div");
   slider.className = "pf-modal-slider";
-  COVERS.forEach((src) => {
+  cards.forEach((card) => {
+    const cardImg = card.querySelector(".carousel-card-img");
     const frame = document.createElement("div");
     frame.className = "pf-modal-frame";
     const img = document.createElement("img");
-    img.src = src;
+    img.src = cardImg ? cardImg.src : "";
     img.alt = "";
     img.loading = "lazy";
     frame.appendChild(img);

@@ -18,13 +18,43 @@ import dribble3 from "../data/work/dribble-3.png?url";
 import dribble4 from "../data/work/dribble-4.png?url";
 import dribble5 from "../data/work/dribble-5.png?url";
 import dribble6 from "../data/work/dribble-6.png?url";
+import dribble7 from "../data/work/dribble-7.png?url";
+import dribble8 from "../data/work/dribble-8.png?url";
+import dribble9 from "../data/work/dribble-9.png?url";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRIC_VALUE = 6; // counter target — featured projects
+const METRIC_VALUE = 9; // counter target — featured projects
 
 // Gallery slides — Rachma's featured Dribbble projects.
 const SLIDES = [
+  {
+    title: "Raya Entertainment — Banking Hub",
+    type: "Fintech",
+    services: ["product design", "ui/ux", "mobile"],
+    description:
+      "A digital entertainment hub built inside a banking app for Bank Raya (BRI Group) — bundling games, rewards, and lifestyle services into one playful space that gives everyday banking a reason to keep coming back.",
+    img: dribble7,
+    url: "https://dribbble.com/shots/27422128-Raya-Entertainment-Digital-entertainment-hub-inside-banking-apps",
+  },
+  {
+    title: "Uang Saku — Digital Bank for Kids",
+    type: "Fintech",
+    services: ["product design", "ui/ux", "mobile"],
+    description:
+      "Indonesia's first kid-focused digital bank for Bank Raya (BRI Group) — a friendly pocket-money experience where children learn to save, spend, and send money safely while parents stay in control.",
+    img: dribble8,
+    url: "https://dribbble.com/shots/27422420-Digital-Bank-for-Kids",
+  },
+  {
+    title: "Loyalty Membership — Bank Raya",
+    type: "Fintech",
+    services: ["product design", "ui/ux", "gamification"],
+    description:
+      "A loyalty and rewards feature for Bank Raya (BRI Group) — five membership tiers, missions, and vouchers designed to feel like friendship, turning routine banking into milestones worth chasing.",
+    img: dribble9,
+    url: "https://dribbble.com/shots/27422528-loyalty-page-banking-apps",
+  },
   {
     title: "Saku Bareng — Community Saving",
     type: "Fintech",
@@ -201,8 +231,14 @@ export function initPortfolio() {
         scrub: 1,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        // Expose the ScrollTrigger so nav links can jump straight to the
+        // moment the gallery grid is fully revealed (see "galleryReveal" label).
+        onRefreshInit: (self) => {
+          container._portfolioST = self;
+        },
       },
     });
+    container._portfolioST = scrollTl.scrollTrigger;
 
     scrollTl
       .to(
@@ -233,6 +269,9 @@ export function initPortfolio() {
         { autoAlpha: 1, y: 0, scale: 1, ease: "expo.out", duration: 1.2 },
         "-=0.3",
       )
+      // Playhead here = gallery grid fully revealed (top rows in view).
+      // Nav "WORK" jumps to the scroll position of this label.
+      .addLabel("galleryReveal")
       .to(
         ".carousel-track",
         { y: () => -getCarouselTravel(), ease: "none", duration: 5 },
